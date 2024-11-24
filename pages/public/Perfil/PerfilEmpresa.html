@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Empresa</title>
+
+    <link rel="stylesheet" href="../Style/style3.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+
+    <script src="../verificarLogin.js"></script>
+    <script src="../mascaras.js"></script>
+
+    <style>
+        .borda-grossa {
+            border: 5px solid rgb(0, 132, 197);
+            border-radius: 10px;
+        }
+    </style>
+
+
+    <script>
+        async function fetchEnterpriseData() {
+            const enterpriseId = sessionStorage.getItem("enterpriseId");
+            try {
+                const response = await fetch(
+                    `http://localhost:3000/empresas/${enterpriseId}`,
+                    {
+                        method: "GET",
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar os dados da empresa");
+                }
+
+                const enterpriseData = await response.json();
+
+                // Preenchendo os campos com os dados do usuário
+                document.getElementById("NomeEmpresa2").value =
+                    enterpriseData.nm_empresa || "";
+                document.getElementById("CnpjEmpresa2").value =
+                    enterpriseData.cnpj_empresa || "";
+                document.getElementById("SenhaEmpresa2").value =
+                    enterpriseData.senha_empresa || ""; // Não preenche a senha por segurança
+                document.getElementById("SegmentoEmpresa2").value =
+                    enterpriseData.segmento_empresa || "";
+                document.getElementById("EmailEmpresa2").value =
+                    enterpriseData.email_empresa || "";
+                document.getElementById("CepEmpresa").value =
+                    enterpriseData.cep_empresa || "";
+                document.getElementById("RuaEmpresa").value =
+                    enterpriseData.rua_empresa || "";
+                document.getElementById("NumeroRuaEmpresa").value =
+                    enterpriseData.numeroRua_empresa || "";
+                document.getElementById("ComplementoEmpresa").value =
+                    enterpriseData.complemento_empresa || "";
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        async function DeleteEnterprise() {
+            const enterpriseId = sessionStorage.getItem("enterpriseId");
+            try {
+                const response = await fetch(
+                    `http://localhost:3000/empresas/${enterpriseId}`,
+                    {
+                        method: "DELETE",
+                    }
+                );
+                sessionStorage.removeItem("enterpriseId");
+                sessionStorage.removeItem("email");
+                sessionStorage.removeItem("empresa");
+                alert("Saindo da Conta...")
+                window.location.href = "../Index/index.html";
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        // Atualizando os dados do usuário
+        async function updateEnterpriseData() {
+            const enterpriseId = sessionStorage.getItem("enterpriseId");
+            const updatedData = {
+                nm_empresa: document.getElementById("NomeEmpresa2").value,
+                cnpj_empresa: document.getElementById("CnpjEmpresa2").value,
+                senha_empresa: document.getElementById("SenhaEmpresa2").value,
+                segmento_empresa: document.getElementById("SegmentoEmpresa2").value,
+                email_empresa: document.getElementById("EmailEmpresa2").value,
+                cep_empresa: document.getElementById("CepEmpresa").value,
+                rua_empresa: document.getElementById("RuaEmpresa").value,
+                numeroRua_empresa: document.getElementById("NumeroRuaEmpresa").value,
+                complemento_empresa:
+                    document.getElementById("ComplementoEmpresa").value,
+            };
+            alert("Dados Atualizado co sucesso");
+
+            try {
+                const response = await fetch(
+                    `http://localhost:3000/empresas/${enterpriseId}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(updatedData),
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Erro ao atualizar os dados da empresa");
+                }
+
+                const result = await response.json();
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        // Carregar os dados do usuário ao iniciar a página
+        fetchEnterpriseData();
+
+        // Event Listener para o botão de atualização
+        document
+            .getElementById("updateButton")
+            .addEventListener("click", (event) => {
+                event.preventDefault();
+                updateEnterpriseData();
+            });
+    </script>
+
+</head>
+
+<!--Começo Header-->
+<header id="header1">
+
+    <div id="container1">
+
+        <div class="row" id="rowheader">
+
+            <div class="col-2">
+
+                <a href="../Index/index.html">
+                    <img src="../../IMG/Logo.jpeg" alt="IMG Logo" id="logo1">
+                </a>
+
+
+
+            </div>
+
+            <div class="col-10">
+
+                <nav id="navapc">
+                    <ul id="navlista">
+                        <li id="navlistaLI"><a href="../Produtos/produtos.html" id="links">Produtos</a></li>
+                        <li id="navlistaLI"><a href="../Suporte/suporte.html" id="links">Suporte</a></li>
+                        <li id="navlistaLI"><a href="../Planos/planos.html" id="links">Planos</a></li>
+                        <li id="navlistaLI"><a href="../Duvidas/duvidas.html" id="links">Duvidas</a></li>
+
+                        <button onclick="verificarLogin()" style="border: none; background-color: white;"><img
+                                id="logoicone" src="../../IMG/5907.jpg" alt=""></button>
+                        <button onclick="verificarLogin2()" style="border: none; background-color: white;"><img
+                                id="logoicone" src="../../IMG/carrinho.jpg" alt=""></button>
+
+                    </ul>
+                </nav>
+
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</header>
+<!--Fim Header-->
+
+
+<body class="tamanhobody2" id="bodymod2">
+    <main>
+
+
+
+        <Section class="">
+
+            <!--Começo Formulário Dados da Empresa-->
+            <form class="row g-3 bg-dark p-4 mr-5 ml-5 mt-5 borda-grossa">
+
+                <div class="col-lg-12 mx-auto">
+
+                    <h1 id="nomeLogo" class="text-center m-3">
+                        <img src="../../IMG/simboloEmpresa.jpg" alt="" class=""
+                            style="width: 50px; height: 50px; border-radius: 40px;">
+                        Empresa
+                    </h1>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="NomeEmpresa2" class="form-label text-white">Empresa</label>
+                    <input type="text" class="form-control" id="NomeEmpresa2">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="CnpjEmpresa2" class="form-label text-white">CNPJ</label>
+                    <input type="text" class="form-control" id="CnpjEmpresa2" oninput="mascaraCNPJ(this)" maxlength="18">
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="SenhaEmpresa2" class="form-label text-white">Senha</label>
+                    <input type="password" class="form-control" id="SenhaEmpresa2">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="SegmentoEmpresa2" class="form-label text-white">Segmento</label>
+                    <input type="text" class="form-control" id="SegmentoEmpresa2">
+                </div>
+
+                <div class="col-md-12">
+                    <label for="EmailEmpresa2" class="form-label text-white">Email da Empresa</label>
+                    <input type="text" class="form-control" id="EmailEmpresa2">
+                </div>
+
+                <div class="col-lg-12 mx-auto">
+                    <h1 id="nomeLogo" class="text-center m-3 mt-5 mb-2">
+                        <img src="../../IMG/simboloEndereco.jpg" alt="" class=""
+                            style="width: 50px; height: 50px; border-radius: 40px;">
+                        Endereço
+                    </h1>
+                </div>
+
+
+                <div class="col-md-6">
+                    <label for="CepEmpresa" class="form-label text-white">CEP</label>
+                    <input type="text" class="form-control" id="CepEmpresa" oninput="mascaraCEP(this)" maxlength="9">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="RuaEmpresa" class="form-label text-white">Rua</label>
+                    <input type="text" class="form-control" id="RuaEmpresa">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="NumeroRuaEmpresa" class="form-label text-white">Número</label>
+                    <input type="number" class="form-control" id="NumeroRuaEmpresa">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="ComplementoEmpresa" class="form-label text-white">Complemento</label>
+                    <input type="text" class="form-control" id="ComplementoEmpresa">
+                </div>
+
+
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary m-4 btn-lg" onclick="updateEnterpriseData()"
+                        id="updateButton">
+                        Alterar Dados do Usuário
+                    </button>
+                    <button type="submit" class="btn btn-primary m-4 btn-lg" onclick="DeleteEnterprise()"
+                        id="">
+                        Sair da Conta
+                    </button>
+                </div>
+
+
+            </form>
+            <!--Fim Formulário Dados do Usuário-->
+        </Section>
+
+
+
+    </main>
+
+
+    <!-- Começo Footer -->
+    <footer>
+
+        <div class="logo">
+            <a href="index.html">
+                <img src="../../IMG/imagemFooter.jpeg" alt="Logo Footer">
+            </a>
+
+        </div>
+
+
+        <ul id="navlistafooter">
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Informações sobre a empresa</a>
+
+            </li>
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Empregos</a>
+
+            </li>
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Informações sobre parceiros</a>
+
+            </li>
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Fale conosco</a>
+
+            </li>
+
+        </ul>
+
+        <ul id="navlistafooter">
+            <li id="colunaiconefooter">
+                ©SolarisPower Corporation
+            </li>|
+
+            <li id="colunaiconefooter">
+                <a href="../Termos/termos.html" id="linksf">Termos de uso</a>
+
+            </li>|
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Cookies</a>
+
+            </li>|
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Privacidade</a>
+
+            </li>|
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Transparencia</a>
+
+            </li>|
+
+            <li id="colunaiconefooter">
+                <a href="../Duvidas/duvidas.html" id="linksf">Parceiros</a>
+
+            </li>
+
+        </ul>
+
+        <ul id="navlistafooter1">
+            <li id="colunaiconefooter">Nossos produtos e serviços de energia solar podem variar em eficiência com base
+                em condições específicas, e nenhum sistema pode ser garantido como 100% seguro. Nós, da EcoSolariz,
+                comprometemo-nos a oferecer soluções sustentáveis de energia solar, alinhadas com os Princípios Globais
+                de Direitos Humanos e em total respeito aos direitos humanos. A segurança dos produtos que vendemos e
+                instalamos é uma prioridade, garantindo que cada componente atenda aos mais altos padrões de qualidade e
+                segurança.</li>
+        </ul>
+
+
+        <div>
+
+        </div>
+    </footer>
+    <!-- Fim Footer -->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
