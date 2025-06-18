@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/global.css">
+    <link rel="stylesheet" href="Style/header.css">
+    <link rel="stylesheet" href="Style/footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+
+    <script src="funcoes.js"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
+
+    <title>Duvidas Frequentes</title>
+    <script src="/js/verificarLogin.js"></script>
+</head>
+
+<body class="tamanhobodyduvidas" id="bodymod2">
+
+    <!-- Começo Cabeçalho ____________________ -->
+    <header class="header">
+
+
+        <div class="container">
+
+            <!-- Logo-->
+            <div class="logo">
+                <a href="/index2">
+                    <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
+                </a>
+            </div>
+
+            <!-- Links NavBar-->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/produtos">Produtos</a></li>
+                    <li><a href="/suporte">Suporte</a></li>
+                    <li><a href="/planos">Planos</a></li>
+                    <li><a href="/duvidas">Dúvidas</a></li>
+                </ul>
+            </nav>
+
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="O que procura hoje?">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+
+            <!-- Botão para Perfil e Carrinho-->
+            <div class="user-actions">
+                <div class="user-login">
+                    <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
+                    <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
+
+                </div>
+
+                <a href="/carrinho" class="cart-button">
+                    <i class="fas fa-shopping-cart cart-icon"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+
+
+        </div>
+    </header>
+    <!-- Fim Cabeçalho ____________________ -->
+
+
+
+
+
+
+    <div>
+        <h2 style="font-size:35px;text-align:center">Perguntas Frequentes</h2>
+
+        <details>
+            <summary>
+                Como a energia solar é transformada em energia eletrica através das placas?
+            </summary>
+            <p>A radiação do sol incide sobre as placas. No aquecimento,
+                a água passa pelos tubos (serpentinas) existentes nos coletores onde é aquecida.
+                Na elétrica, o sol incide sobre os coletores solares fotovoltaicos fabricado com
+                silício, material que na presença de luz solar converte esta em eletricidade.
+            </p>
+        </details>
+        <details>
+            <summary>
+                Durante chuvas ou com o céu nublado o sistema continua gerando energia?
+            </summary>
+            <p>
+                A placa reaproveita o calor solar para aquecer a água, e então a geração de energia.
+                Portanto, se for substuido o modo de aquecimento da água, o sistema irá gerar energia
+                normalmente, porem a ideia principal e reaproveitar o radiação solar pelo valor sustentavel.
+            </p>
+        </details>
+        <details>
+            <summary>
+                Qual a certificação que o técnico de instalação ou projetista deve possuir?
+            </summary>
+            <p>Para a mão de obra de instalação dos projetos os profissionais devem estar contemplados
+                com certificações de Eletricistas reconhecidos por orgãos competentes, mais cursos adicioanis
+                como NR 10, que ressalta ações comportamentais de segurança para média e baixa tensão. Ou
+                alguam outra certificação que o projeto exija, como por exemplo a NR 35, que abrange trabalhos
+                em altura.
+                Já para os profissionais que elaboram o projeto devem estar ativamente registrado no CREA e/ou
+                até mesmo no CRQ. Varios profissionais podem executar este projetos a depender da sua potencia de
+                geração
+                de carga eletrica, esses projetistas podem ser de nivel tecnico desde mecatrônicos, eletricistas,
+                eletrotécnicos, eletrônica e ate
+                é mesmos metalúrgicos.
+            </p>
+        </details>
+        <details>
+            <summary>
+                A SolarisPower ministra cursos?
+            </summary>
+            <p>Sim, a SolarisPower oferece várias certificações como Nr 10, Nr 23, Nr 35, através de treinamentos sob
+                supervisação de profissional habilitado.
+            </p>
+        </details>
+        </table>
+    </div>
+
+
+    <!-- Começo Rodapé  ------------------ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Categorias</h4>
+                    <ul>
+                        <li><a href="/produtos">Painéis Solares</a></li>
+                        <li><a href="/produtos">Baterias</a></li>
+                        <li><a href="/produtos">Inversores</a></li>
+                        <li><a href="/produtos">Kits Completos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Institucional</h4>
+                    <ul>
+                        <li><a href="/sobre">Sobre Nós</a></li>
+                        <li><a href="/noticia">Notícias</a></li>
+                        <li><a href="/duvidas">Dúvidas Frequentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Atendimento</h4>
+                    <ul>
+                        <li><a href="/suporte">Fale Conosco</a></li>
+                        <li><a href="">Política de Privacidade</a></li>
+                        <li><a href="">Termos de Uso</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="copyright">
+                <p>&copy; <span id="current-year">2025</span> SolarisPower. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fim Rodapé  ------------------ -->
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/global.css">
+    <link rel="stylesheet" href="Style/header.css">
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/footer.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.pn">
+    <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
+
+
+    <title>Página Inicial</title>
+
+
+    <script src="/js/verificarLogin.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/script.js"></script>
+
+
+</head>
+
+<body class="tamanhobody">
+
+
+    <!-- Começo Cabeçalho ____________________ -->
+    <header class="header">
+
+
+        <div class="container">
+
+            <!-- Logo-->
+            <div class="logo">
+                <a href="/index2">
+                    <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
+                </a>
+            </div>
+
+            <!-- Links NavBar-->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/produtos">Produtos</a></li>
+                    <li><a href="/suporte">Suporte</a></li>
+                    <li><a href="/planos">Planos</a></li>
+                    <li><a href="/duvidas">Dúvidas</a></li>
+                </ul>
+            </nav>
+
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="O que procura hoje?">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+
+            <!-- Botão para Perfil e Carrinho-->
+            <div class="user-actions">
+                <div class="user-login">
+                    <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
+                    <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
+
+                </div>
+
+
+
+
+                <a href="/carrinho" class="cart-button"> 
+                    <i class="fas fa-shopping-cart cart-icon"></i>
+                    <span class="cart-count">0</span>
+                </a>
+
+            </div>
+
+
+        </div>
+    </header>
+    <!-- Fim Cabeçalho ____________________ -->
+
+
+
+
+    <!-- Começo Banner Principal ____________ -->
+    <section class="hero-banner">
+        <div class="container">
+            <div class="hero-content">
+                <img src="Images/fotoBanner.jpg" alt="" class="hero-image">
+                <h1>ENERGIA SOLAR<br>
+                    <span class="highlight">INVESTIMENTO</span><br>
+                    INTELIGENTE
+                </h1>
+                <p>Transforme sua casa com energia solar. Reduza suas contas de energia e contribua para um planeta mais
+                    verde.</p>
+                <a href="/produtos" class="btn btn-primary">Ver Produtos</a>
+            </div>
+        </div>
+    </section>
+    <!-- Fim Banner Principal ____________ -->
+
+
+
+    <!-- Começo Seções de Destaque ____________ -->
+    <section class="featured-sections">
+        <div class="container">
+            <div class="section-grid">
+                <a href="/sobre">
+                    <div class="feature-card">
+                        <div class="feature-image educacional">
+                            <h3>Educacional</h3>
+                        </div>
+                    </div>
+                </a>
+                <a href="/noticia">
+                    <div class="feature-card">
+                        <div class="feature-image noticias">
+                            <h3>Notícias do mundo fotovoltaico</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Fim Seções de Destaque ____________ -->
+
+
+
+    
+
+
+
+
+    <Section class="" >
+
+
+        <div class="container text-center">
+
+            <div class="row">
+
+
+                <div class="col"><!--Começo Coluna 2-->
+
+                    <div class="card cardProduto bg-dark" style="border: 5px solid #0d2240;">
+                        <img src="Images/kit3png.jpg" class="card-img-top w-100 h-50" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">Conjunto 4x paineis Solares e baterias</h5>
+                            <p class="card-text text-white mb-2">4 Placa Solares com 4 baterias</p>
+                            <span class="text-white">2499.99</span>
+                            <input type="number" class="mb-3 w-100" id="qtd2" min="0" placeholder="0">
+                            <button type="submit" onclick="compra2()" class="btn btn-primary"
+                                style="border: 4px solid #0d2240;">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+
+                </div> <!--Fim Coluna 2-->
+
+                <div class="col"> <!--Começo Coluna 3-->
+
+                    <div class="card cardProduto bg-dark" style="border: 5px solid #0d2240;">
+                        <img src="Images/kit03.png" class="card-img-top w-100 h-50" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">Conjunto 4x paineis solares com controladora</h5>
+                            <p class="card-text text-white">4 painéis solares e 2 baterias</p>
+                            <span class="text-white">R$1999.90</span>
+                            <input type="number" class="mb-3 w-100" id="qtd3" min="0" placeholder="0">
+                            <button type="submit" onclick="compra3()" class="btn btn-primary"
+                                style="border: 4px solid #0d2240;">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+
+                </div> <!--Fim Coluna 3-->
+
+                <div class="col"> <!--Começo Coluna 4-->
+
+                    <div class="card cardProduto bg-dark" style="border: 7px solid #0d2240;">
+                        <img src="Images/kit5.png" class="card-img-top w-100 h-50" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-white">2 painéis solares de 4 metros</h5>
+                            <p class="card-text text-white mb-2">Painel solar com bateria</p>
+                            <span class="text-white">R$3999.90</span>
+                            <input type="number" class="mb-3 w-100" id="qtd4" min="0" placeholder="0">
+                            <button type="submit" onclick="compra4()" class="btn btn-primary"
+                                style="border: 4px solid #0d2240;">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+
+                </div> <!--Fim Coluna 4-->
+
+            </div>
+        </div>
+
+
+
+
+    </Section>
+
+
+
+    <div id="box5">
+
+        <nav id="navapc">
+
+            <ul id="navlista2">
+
+                <li id="colunaicone">
+                    <a href="/produtos" id="links">
+                        <img src="Images/IconesNAV/solar_power.svg" alt="NAVICO">
+                        <span>Produtos</span>
+                    </a>
+
+                </li>
+
+                <li id="colunaicone">
+                    <a href="/suporte" id="links">
+                        <img src="Images/IconesNAV/assignment.svg" alt="NAVICO">
+                        <span>Suporte</span>
+                    </a>
+
+                </li>
+
+                <li id="colunaicone">
+                    <a href="/planos" id="links">
+                        <img src="Images/IconesNAV/call_log.svg" alt="NAVICO">
+                        <span>Planos</span>
+                    </a>
+
+                </li>
+
+                
+
+            </ul>
+        </nav>
+
+
+    </div>
+
+
+
+
+    <!-- Começo Rodapé  ------------------ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Categorias</h4>
+                    <ul>
+                        <li><a href="/produtos">Painéis Solares</a></li>
+                        <li><a href="/produtos">Baterias</a></li>
+                        <li><a href="/produtos">Inversores</a></li>
+                        <li><a href="/produtos">Kits Completos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Institucional</h4>
+                    <ul>
+                        <li><a href="/sobre">Sobre Nós</a></li>
+                        <li><a href="/noticia">Notícias</a></li>
+                        <li><a href="/duvidas">Dúvidas Frequentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Atendimento</h4>
+                    <ul>
+                        <li><a href="/suporte">Fale Conosco</a></li>
+                        <li><a href="">Política de Privacidade</a></li>
+                        <li><a href="">Termos de Uso</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="copyright">
+                <p>&copy; <span id="current-year">2025</span> SolarisPower. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fim Rodapé  ------------------ -->
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
