@@ -54,6 +54,15 @@ public class SolarisController {
         return "Duvidas/duvidas";
     }
 
+
+    /* Rota CadastroProduto */
+    @GetMapping("/cadastrarProduto")
+    public String cadastrarProduto() {
+        return "CadastroProduto/CadastrarProduto";
+    }
+
+
+
     // Fim Rotas NavBar -------------------------------------
 
     
@@ -76,6 +85,12 @@ public class SolarisController {
     @GetMapping("/sobre")
     public String sobre() {
         return "Sobre/sobre";
+    }
+
+     /* Rota CadastroProduto */
+    @GetMapping("/cadastrarProd")
+    public String cadastrarProd() {
+        return "CadastroProduto/CadastrarProduto";
     }
 
 

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/global.css">
+    <link rel="stylesheet" href="Style/header.css">
+    <link rel="stylesheet" href="Style/cadastrarProduto.css">
+    <link rel="stylesheet" href="Style/footer.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.pn">
+    <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
+
+
+    <title>Cadastrar Produto</title>
+
+
+    <script src="/js/verificarLogin.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/edicaoProduto.js"></script>
+
+
+</head>
+
+<body class="tamanhobody">
+
+
+
+
+
+    <!-- Começo Cabeçalho ____________________ -->
+    <header class="header">
+
+
+        <div class="container">
+
+            <!-- Logo-->
+            <div class="logo">
+                <a href="/index2">
+                    <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
+                </a>
+            </div>
+
+            <!-- Links NavBar-->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/produtos">Produtos</a></li>
+                    <li><a href="/suporte">Suporte</a></li>
+                    <li><a href="/planos">Planos</a></li>
+                    <li><a href="/duvidas">Dúvidas</a></li>
+                </ul>
+            </nav>
+
+
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="O que procura hoje?">
+                <button class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+
+            <!-- Botão para Perfil e Carrinho-->
+            <div class="user-actions">
+                <div class="user-login">
+                    <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
+                    <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
+
+                </div>
+
+
+
+
+                <a href="/carrinho" class="cart-button">
+                    <i class="fas fa-shopping-cart cart-icon"></i>
+                    <span class="cart-count">0</span>
+                </a>
+
+            </div>
+
+
+        </div>
+    </header>
+    <!-- Fim Cabeçalho ____________________ -->
+
+
+
+
+
+    <!-- Começo Cadastrar Produto -->
+    <main>
+
+        <form th:action="@{/paginaCadastroProdutos}" method="post" enctype="multipart/form-data"
+            th:object="${produtoDTO}">
+            <h1>Cadastro de Produtos</h1>
+
+            <label for="nome">Nome do Produto</label>
+            <input type="text" th:field="*{nm_produto}" required>
+
+            <label for="categoria">Categoria</label>
+            <select th:field="*{categoria}">
+                <option value="painel">PAINEL SOLAR</option>
+                <option value="kitoffgrid">KIT OFF GRID</option>
+                <option value="kitongrid">GRID ON GRID</option>
+                <option value="inversor">INVERSOR</option>
+                <option value="bateria">BATERIA SOLAR</option>
+                <option value="controlador">CONTROLADOR DE CARGA</option>
+                <option value="acessorios">ACESSÓRIOS</option>
+            </select>
+
+            <label for="descricao">Descrição</label>
+            <textarea th:field="*{descricao_produto}" rows="4"></textarea>
+
+            <label for="preco">Preço (R$)</label>
+            <input type="number" th:field="*{preco_produto}" step="0.01" required>
+
+            <label for="estoque">Quantidade em Estoque</label>
+            <input type="number" th:field="*{qtd_produto}" required>
+
+            <label for="imagem">Imagem</label>
+            <input type="file" th:field="*{imagem}" accept="image/*" required>
+
+            <button type="submit" id="btnSalvar">Salvar Produto</button>
+            <input type="hidden" name="idProdutoEdicao" id="idProdutoEdicao" th:value="${idProdutoEdicao}">
+        </form>
+    </main>
+    <!-- Fim Cadastrar Produto -->
+
+
+
+
+    <!-- Começo lista de produtos Cadastrados -->
+    <section class="produtos-cadastrados">
+        <h2>Produtos Cadastrados</h2>
+
+        <table class="tabela-produtos" th:if="${produtos != null and !produtos.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>Imagem</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="produto : ${produtos}">
+                    <td>
+                        <img th:src="@{/imagem/{id}(id=${produto.cd_produto})}"
+                            alt="Imagem de [[${produto.nm_produto}]]" width="80" height="80" style="object-fit: cover;">
+                    </td>
+                    <td th:text="${produto.nm_produto}">Nome</td>
+                    <td th:text="${produto.categoria}">Categoria</td>
+                    <td th:text="${produto.descricao_produto}">Descrição</td>
+                    <td th:text="${#numbers.formatDecimal(produto.preco_produto, 2, 2)}">Preço</td>
+                    <td th:text="${produto.qtd_produto}">Estoque</td>
+
+                    <td>
+                        <button type="button" class="btn-acao atualizar" 
+                        th:onclick="'carregarProdutoParaEdicao(' + ${produto.cd_produto} + ')'">
+                            Atualizar
+                        </button>
+                        <button class="btn-acao excluir"
+                            th:onclick="'excluirProduto(' + ${produto.cd_produto} + ')'">Excluir</button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <p th:if="${produtos == null or produtos.isEmpty()}" class="text-muted">
+            Nenhum produto cadastrado até o momento.
+        </p>
+    </section>
+
+
+    <!-- Fim lista de produtos Cadastrados-->
+
+
+
+    <!-- Formulário de Atualização (inicialmente escondido) -->
+    <form id="form-editar-produto" style="display: none;" method="post" enctype="multipart/form-data"
+        action="/paginaCadastroProdutos">
+        <h2>Atualizar Produto</h2>
+
+        <label for="nome">Nome do Produto</label>
+        <input type="text" name="nm_produto" id="edit-nm_produto" required>
+
+        <label for="categoria">Categoria</label>
+        <select name="categoria" id="edit-categoria">
+            <option value="painel">PAINEL SOLAR</option>
+            <option value="kitoffgrid">KIT OFF GRID</option>
+            <option value="kitongrid">GRID ON GRID</option>
+            <option value="inversor">INVERSOR</option>
+            <option value="bateria">BATERIA SOLAR</option>
+            <option value="controlador">CONTROLADOR DE CARGA</option>
+            <option value="acessorios">ACESSÓRIOS</option>
+        </select>
+
+        <label for="descricao">Descrição</label>
+        <textarea name="descricao_produto" id="edit-descricao_produto" rows="4"></textarea>
+
+        <label for="preco">Preço (R$)</label>
+        <input type="number" name="preco_produto" id="edit-preco_produto" step="0.01" required>
+
+        <label for="estoque">Quantidade em Estoque</label>
+        <input type="number" name="qtd_produto" id="edit-qtd_produto" required>
+
+        <label for="imagem">Imagem</label>
+        <input type="file" name="imagem" id="edit-imagem" accept="image/*">
+
+        <input type="hidden" name="idProdutoEdicao" id="edit-idProdutoEdicao">
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
