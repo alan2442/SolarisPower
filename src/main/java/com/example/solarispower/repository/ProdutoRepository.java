@@ -17,4 +17,5 @@ public interface ProdutoRepository extends CrudRepository<Produto, Long> {
     // Método personalizado para buscar uma lista de produtos pertencentes a uma determinada empresa
     // O Spring Data implementa automaticamente esse método baseado na convenção do nome
     List<Produto> findByEmpresa(Empresa empresa);
+    List<Produto> findByNomeContainingIgnoreCase(String nome);
 }

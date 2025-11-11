@@ -1,12 +1,8 @@
-function mascaraCPF(campo) {
+function mascaraCEP(campo) {
   // Remove tudo o que não for número
   campo.value = campo.value.replace(/\D/g, "")
-    // Adiciona o primeiro ponto
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    // Adiciona o segundo ponto
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    // Adiciona o traço
-    .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    // Adiciona o hífen após os 5 primeiros números
+    .replace(/^(\d{5})(\d)/, "$1-$2");
 }
 
 

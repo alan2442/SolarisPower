@@ -7,19 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.solarispower.dto.ProdutoDTO;
 import com.example.solarispower.models.Produto;
 import com.example.solarispower.services.ProdutoService;
 
 @RestController
 @RequestMapping("/cadastroProdutos")
 public class ProdutoController {
-    
+
     @Autowired
     private ProdutoService produtoService;
 
@@ -34,26 +34,33 @@ public class ProdutoController {
     public ResponseEntity<Produto> buscarPorId(@PathVariable Long id) {
         Optional<Produto> produto = produtoService.buscarPorId(id);
         return produto.map(ResponseEntity::ok)
-                      .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    /*  Buscar produto por cdProduto (método customizado)
-    @GetMapping("/codigo/{cdProduto}")
-    public ResponseEntity<Produto> buscarPorCdProduto(@PathVariable Long cdProduto) {
-        Produto produto = produtoService.buscarPorCdProduto(cdProduto);
-        if (produto != null) {
-            return ResponseEntity.ok(produto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
+    /*
+     * Buscar produto por cdProduto (método customizado)
+     * 
+     * @GetMapping("/codigo/{cdProduto}")
+     * public ResponseEntity<Produto> buscarPorCdProduto(@PathVariable Long
+     * cdProduto) {
+     * Produto produto = produtoService.buscarPorCdProduto(cdProduto);
+     * if (produto != null) {
+     * return ResponseEntity.ok(produto);
+     * } else {
+     * return ResponseEntity.notFound().build();
+     * }
+     * }
+     */
 
-    /*  Criar novo produto
-    @PostMapping
-    public ResponseEntity<Produto> criarProduto(@RequestBody Produto produto) {
-        Produto novoProduto = produtoService.salvarProduto(produto);
-        return ResponseEntity.ok(novoProduto);
-    } */
+    /*
+     * Criar novo produto
+     * 
+     * @PostMapping
+     * public ResponseEntity<Produto> criarProduto(@RequestBody Produto produto) {
+     * Produto novoProduto = produtoService.salvarProduto(produto);
+     * return ResponseEntity.ok(novoProduto);
+     * }
+     */
 
     // Atualizar produto existente
     @PutMapping("/{id}")
@@ -73,6 +80,24 @@ public class ProdutoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/editar/{id}")
+    public ResponseEntity<ProdutoDTO> buscarProdutoParaEdicao(@PathVariable Long id) {
+        Optional<Produto> produtoOpt = produtoService.buscarPorId(id);
 
+        if (produtoOpt.isPresent()) {
+            Produto produto = produtoOpt.get();
+
+            ProdutoDTO dto = new ProdutoDTO();
+            dto.setNome(produto.getNome());
+            dto.setDescricao(produto.getDescricao());
+            dto.setQuantidade(produto.getQuantidade());
+            dto.setPreco(produto.getPreco().toString());
+            dto.setCategoria(produto.getCategoria());
+
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

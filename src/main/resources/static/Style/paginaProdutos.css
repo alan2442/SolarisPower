@@ -1,0 +1,128 @@
+/* === Cards de Produtos (Design Moderno UI/UX) === */
+.produto-card {
+  background: radial-gradient(circle at top, #0d2240 0%, #000000 80%);
+  border: 1px solid rgba(13, 34, 64, 0.6);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.35s ease;
+  backdrop-filter: blur(4px);
+}
+
+.produto-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 102, 204, 0.4);
+  border-color: #004aad;
+}
+
+/* === Área da Imagem === */
+.card-img-container {
+  width: 100%;
+  height: 230px;
+  background: linear-gradient(180deg, #0d2240 0%, #000000 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 2px solid rgba(0, 74, 173, 0.3);
+  position: relative;
+}
+
+.card-img-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+
+.card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+  z-index: 1;
+}
+
+.produto-card:hover .card-img-container img {
+  transform: scale(1.07);
+}
+
+/* === Corpo do Card === */
+.card-body {
+  flex-grow: 1;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Título */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 74, 173, 0.5);
+  margin-bottom: 8px;
+}
+
+/* Descrição */
+.card-text {
+  flex-grow: 1;
+  font-size: 0.95rem;
+  color: #cfd8dc;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* Preço */
+.card-body span {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #66b3ff;
+  text-shadow: 0 0 6px rgba(0, 74, 173, 0.4);
+  margin-bottom: 10px;
+}
+
+/* === Botão de Adicionar === */
+.btn-primary {
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #004aad 0%, #0066ff 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 74, 173, 0.4);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #0066ff 0%, #004aad 100%);
+  box-shadow: 0 6px 16px rgba(0, 102, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* === Responsividade === */
+@media (max-width: 768px) {
+  .card-img-container {
+    height: 200px;
+  }
+  .card-title {
+    font-size: 1.1rem;
+  }
+  .card-text {
+    font-size: 0.9rem;
+  }
+}

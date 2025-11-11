@@ -1,0 +1,223 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    
+    background: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.container2 {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    min-height: 20vh;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+    margin: 20px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.centralizar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.container > h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#formulario > .form-group {
+    margin-bottom: 20px;
+}
+
+.form-group > label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: bold;
+}
+
+.form-group > input, select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.form-group > input:focus, select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+#formulario > button {
+    background-color: #3f42f4;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+
+#resultado > button {
+    background-color: #3f42f4;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+
+
+
+#resultado > button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+#formulario > .terms {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.form-group > .cep-input {
+    display: flex;
+}
+
+.form-group > .cep-input input {
+    flex: 1;
+    border-radius: 8px 0 0 8px;
+}
+
+.form-group > .cep-input span {
+    background-color: #3f42f4;
+    color: white;
+    padding: 15px;
+    border: 1px solid #4CAF50;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.cep-input span {
+    background-color: #3f42f4;
+    color: white;
+    padding: 15px;
+    border: 1px solid #4CAF50;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.cep-input span:hover {
+    background-color: #45a049;
+}
+
+.container2 > .resultado {
+    margin-top: 30px;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.container2 > .resultado h2 {
+    color: #4CAF50;
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#resultado > .economia-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+}
+
+#resultado > .valor-destaque {
+    font-size: 26px;
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: center;
+    margin: 25px 0;
+    padding: 15px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 8px;
+}
+
+#resultado > .btn-nova-simulacao {
+    background-color: #2196F3;
+    margin-top: 20px;
+}
+
+#resultado > .btn-nova-simulacao:hover {
+    background-color: #0b7dda;
+}
+
+@media (max-width: 600px) {
+    .container2 > .container {
+        padding: 25px;
+        margin: 15px;
+    }
+    
+    .container2 > h1 {
+        font-size: 20px;
+    }
+    
+    .container2 > input, select, button {
+        padding: 12px;
+    }
+}

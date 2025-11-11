@@ -4,6 +4,7 @@ package com.example.solarispower.models;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,10 @@ public class Pessoa {
 
     private String nmPessoa;
     private String dtNascimento;
+
+    @Column(unique = true) // Adiciona a restrição de unicidade no campo emailPessoa
     private String emailPessoa;
+    
     private String cpfPessoa; // unique
     private String senhaPessoa;
     private String cepPessoa;

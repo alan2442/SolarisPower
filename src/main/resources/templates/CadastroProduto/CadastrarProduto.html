@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
-
+<html lang="pt-br" xmlns:th="http://thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -19,43 +18,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
 
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.pn">
+    <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
 
-
     <title>Cadastrar Produto</title>
-
-
-    <script src="/js/verificarLogin.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/edicaoProduto.js"></script>
 
 
 </head>
 
 <body class="tamanhobody">
 
-
-
-
-
-    <!-- Começo Cabeçalho ____________________ -->
+    <!-- Cabeçalho -->
     <header class="header">
-
-
         <div class="container">
-
-            <!-- Logo-->
             <div class="logo">
                 <a href="/index2">
                     <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
                 </a>
             </div>
 
-            <!-- Links NavBar-->
             <nav class="main-nav">
                 <ul>
                     <li><a href="/produtos">Produtos</a></li>
@@ -65,7 +47,6 @@
                 </ul>
             </nav>
 
-
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="O que procura hoje?">
                 <button class="search-button">
@@ -73,49 +54,35 @@
                 </button>
             </div>
 
-
-            <!-- Botão para Perfil e Carrinho-->
             <div class="user-actions">
                 <div class="user-login">
                     <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
                     <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
-
                 </div>
-
-
-
 
                 <a href="/carrinho" class="cart-button">
                     <i class="fas fa-shopping-cart cart-icon"></i>
                     <span class="cart-count">0</span>
                 </a>
-
             </div>
-
-
         </div>
     </header>
-    <!-- Fim Cabeçalho ____________________ -->
+    <!-- Fim Cabeçalho -->
 
-
-
-
-
-    <!-- Começo Cadastrar Produto -->
+    <!-- Formulário de cadastro -->
     <main>
-
         <form th:action="@{/paginaCadastroProdutos}" method="post" enctype="multipart/form-data"
             th:object="${produtoDTO}">
-            <h1>Cadastro de Produtos</h1>
+            <h1 id="titulo-form">Cadastrar Produto</h1>
 
             <label for="nome">Nome do Produto</label>
-            <input type="text" th:field="*{nm_produto}" required>
+            <input type="text" th:field="*{nome}" required>
 
             <label for="categoria">Categoria</label>
             <select th:field="*{categoria}">
                 <option value="painel">PAINEL SOLAR</option>
                 <option value="kitoffgrid">KIT OFF GRID</option>
-                <option value="kitongrid">GRID ON GRID</option>
+                <option value="kitongrid">KIT ON GRID</option>
                 <option value="inversor">INVERSOR</option>
                 <option value="bateria">BATERIA SOLAR</option>
                 <option value="controlador">CONTROLADOR DE CARGA</option>
@@ -123,29 +90,39 @@
             </select>
 
             <label for="descricao">Descrição</label>
-            <textarea th:field="*{descricao_produto}" rows="4"></textarea>
+            <textarea th:field="*{descricao}" rows="4"></textarea>
 
             <label for="preco">Preço (R$)</label>
-            <input type="number" th:field="*{preco_produto}" step="0.01" required>
+            <input type="number" th:field="*{preco}" step="0.01" required>
 
-            <label for="estoque">Quantidade em Estoque</label>
-            <input type="number" th:field="*{qtd_produto}" required>
+            <label for="quantidade">Quantidade em Estoque</label>
+            <input type="number" th:field="*{quantidade}" required>
 
             <label for="imagem">Imagem</label>
             <input type="file" th:field="*{imagem}" accept="image/*" required>
 
             <button type="submit" id="btnSalvar">Salvar Produto</button>
+            <button type="button" id="btnCancelar" style="display:none;">Cancelar</button>
             <input type="hidden" name="idProdutoEdicao" id="idProdutoEdicao" th:value="${idProdutoEdicao}">
         </form>
     </main>
-    <!-- Fim Cadastrar Produto -->
+    <!-- Fim Formulário -->
 
-
-
-
-    <!-- Começo lista de produtos Cadastrados -->
+    <!-- Lista de produtos -->
     <section class="produtos-cadastrados">
         <h2>Produtos Cadastrados</h2>
+
+
+        <div class="buscar-produto">
+            <div class="search-wrapper">
+                <input type="text" id="input-busca" placeholder="Buscar produto por nome...">
+                <button type="button" id="btn-buscar" title="Buscar produto">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+
 
         <table class="tabela-produtos" th:if="${produtos != null and !produtos.isEmpty()}">
             <thead>
@@ -159,84 +136,36 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+
+            <tbody id="tbody-produtos">
                 <tr th:each="produto : ${produtos}">
                     <td>
-                        <img th:src="@{/imagem/{id}(id=${produto.cd_produto})}"
-                            alt="Imagem de [[${produto.nm_produto}]]" width="80" height="80" style="object-fit: cover;">
+                        <img th:src="@{/imagem/{id}(id=${produto.id})}" alt="Imagem de [[${produto.nome}]]" width="80"
+                            height="80" style="object-fit: cover;">
                     </td>
-                    <td th:text="${produto.nm_produto}">Nome</td>
+                    <td th:text="${produto.nome}">Nome</td>
                     <td th:text="${produto.categoria}">Categoria</td>
-                    <td th:text="${produto.descricao_produto}">Descrição</td>
-                    <td th:text="${#numbers.formatDecimal(produto.preco_produto, 2, 2)}">Preço</td>
-                    <td th:text="${produto.qtd_produto}">Estoque</td>
-
+                    <td th:text="${produto.descricao}">Descrição</td>
+                    <td th:text="${#numbers.formatDecimal(produto.preco, 2, 2)}">Preço</td>
+                    <td th:text="${produto.quantidade}">Estoque</td>
                     <td>
-                        <button type="button" class="btn-acao atualizar" 
-                        th:onclick="'carregarProdutoParaEdicao(' + ${produto.cd_produto} + ')'">
-                            Atualizar
-                        </button>
+                        <button type="button" class="btn-acao atualizar"
+                            th:onclick="'carregarProdutoParaEdicao(' + ${produto.id} + ')'">Atualizar</button>
                         <button class="btn-acao excluir"
-                            th:onclick="'excluirProduto(' + ${produto.cd_produto} + ')'">Excluir</button>
+                            th:onclick="'excluirProduto(' + ${produto.id} + ')'">Excluir</button>
                     </td>
-
                 </tr>
             </tbody>
+
         </table>
+
+        <p id="sem-produtos" style="display:none">Nenhum produto encontrado.</p>
 
         <p th:if="${produtos == null or produtos.isEmpty()}" class="text-muted">
             Nenhum produto cadastrado até o momento.
         </p>
     </section>
-
-
-    <!-- Fim lista de produtos Cadastrados-->
-
-
-
-    <!-- Formulário de Atualização (inicialmente escondido) -->
-    <form id="form-editar-produto" style="display: none;" method="post" enctype="multipart/form-data"
-        action="/paginaCadastroProdutos">
-        <h2>Atualizar Produto</h2>
-
-        <label for="nome">Nome do Produto</label>
-        <input type="text" name="nm_produto" id="edit-nm_produto" required>
-
-        <label for="categoria">Categoria</label>
-        <select name="categoria" id="edit-categoria">
-            <option value="painel">PAINEL SOLAR</option>
-            <option value="kitoffgrid">KIT OFF GRID</option>
-            <option value="kitongrid">GRID ON GRID</option>
-            <option value="inversor">INVERSOR</option>
-            <option value="bateria">BATERIA SOLAR</option>
-            <option value="controlador">CONTROLADOR DE CARGA</option>
-            <option value="acessorios">ACESSÓRIOS</option>
-        </select>
-
-        <label for="descricao">Descrição</label>
-        <textarea name="descricao_produto" id="edit-descricao_produto" rows="4"></textarea>
-
-        <label for="preco">Preço (R$)</label>
-        <input type="number" name="preco_produto" id="edit-preco_produto" step="0.01" required>
-
-        <label for="estoque">Quantidade em Estoque</label>
-        <input type="number" name="qtd_produto" id="edit-qtd_produto" required>
-
-        <label for="imagem">Imagem</label>
-        <input type="file" name="imagem" id="edit-imagem" accept="image/*">
-
-        <input type="hidden" name="idProdutoEdicao" id="edit-idProdutoEdicao">
-        <button type="submit">Salvar Alterações</button>
-    </form>
-
-
-
-
-
-
-
-
-
+    <!-- Fim Lista -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -250,6 +179,9 @@
 
 
 
+    <script src="/js/verificarLogin.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/edicaoProduto.js"></script>
 </body>
 
 </html>

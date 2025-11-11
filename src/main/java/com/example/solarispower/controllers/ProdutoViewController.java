@@ -1,23 +1,15 @@
 package com.example.solarispower.controllers;
 
-
-
-// Importações necessárias
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.solarispower.dto.ProdutoDTO;
@@ -29,131 +21,24 @@ import com.example.solarispower.services.ProdutoService;
 public class ProdutoViewController {
 
     @Autowired
-    private ProdutoService produtoService; // Injeta o serviço responsável por lidar com lógica de Produto
-
-
+    private ProdutoService produtoService;
 
     // ===============================
-    // EXIBIR A TELA DE CADASTRO
+    // EXIBIR PÁGINA DE CADASTRO
     // ===============================
     @GetMapping("/paginaCadastroProdutos")
-    public String mostrarPaginaCadastro(
-            @SessionAttribute("empresaLogado") Empresa empresa,
-            Model model) {
-        
-        // Busca produtos da empresa logada
+    public String mostrarPaginaCadastro(@SessionAttribute("empresaLogado") Empresa empresa, Model model) {
         List<Produto> listaProdutos = produtoService.listarPorEmpresa(empresa);
 
-
-        // Adiciona a lista e um objeto DTO vazio ao modelo
         model.addAttribute("produtos", listaProdutos);
         model.addAttribute("produtoDTO", new ProdutoDTO());
+        model.addAttribute("idProdutoEdicao", null);
 
-        // Retorna o template da tela de cadastro
         return "CadastroProduto/CadastrarProduto";
     }
 
-    
-
-
     // ===============================
-    // EXIBIR IMAGEM DO PRODUTO
-    // ===============================
-    @GetMapping("imagem/{id}")
-    @ResponseBody
-    public ResponseEntity<byte[]> exibirImagem(@PathVariable Long id) {
-
-        // Busca o produto pelo ID
-        Optional<Produto> produtoOpt = produtoService.buscarPorId(id);
-
-
-        // Se encontrado e tiver imagem, retorna a imagem
-        if (produtoOpt.isPresent() && produtoOpt.get().getImagem() != null) {
-            return ResponseEntity.ok().body(produtoOpt.get().getImagem());
-        } else {
-            // Caso contrário, retorna 404
-            return ResponseEntity.notFound().build();
-        }
-
-    }
-
-
-
-
-    // ===============================
-    // EXCLUIR PRODUTO
-    // ===============================
-    @PostMapping("/produto/excluir/{id}")
-    public String excluirProduto(
-            @PathVariable Long id,
-            @SessionAttribute("empresaLogado") Empresa empresa,
-            Model model) {
-        
-        // Remove o produto do banco
-        produtoService.deletarProduto(id);
-        
-        
-        // Atualiza lista de produtos no modelo
-        List<Produto> listaAtualizada = produtoService.listarPorEmpresa(empresa);
-        model.addAttribute("produtos", listaAtualizada);
-        model.addAttribute("produtoDTO", new ProdutoDTO());
-        model.addAttribute("msg", "Produto excluido com sucesso!");
-        
-
-        // Retorna à mesma tela de cadastro
-        return "CadastroProduto/CadastrarProduto";
-    }
-
-
-
-
-    // ===============================
-    // MOSTRAR FORMULÁRIO DE EDIÇÃO
-    // ===============================
-    @GetMapping("/produto/editar/{id}")
-    public String mostrarFormularioEdicao(
-            @PathVariable Long id,
-            @SessionAttribute("empresaLogado") Empresa empresa,
-            Model model) {
-        
-        // Busca o produto pelo ID
-        Optional<Produto> produtoOpt = produtoService.buscarPorId(id);
-
-        if (produtoOpt.isPresent()) {
-
-            Produto produto = produtoOpt.get();
-
-            // Cria um DTO e preenche com os dados do produto
-            ProdutoDTO produtoDTO = new ProdutoDTO();
-            produtoDTO.setNm_produto(produto.getNm_produto());
-            produtoDTO.setDescricao_produto(produto.getDescricao_produto());
-            produtoDTO.setQtd_produto(produto.getQtd_produto());
-            produtoDTO.setPreco_produto(produto.getPreco_produto().toString());
-            produtoDTO.setCategoria(produto.getCategoria());
-
-            // Adiciona o DTO e o ID para saber que é uma edição
-            model.addAttribute("produtoDTO", produtoDTO);
-            model.addAttribute("idProdutoEdicao", id);
-
-            // Adiciona a lista de produtos para manter a tabela visível
-            List<Produto> listaProdutos = produtoService.listarPorEmpresa(empresa);
-            model.addAttribute("produtos", listaProdutos);
-
-
-            // Volta para a mesma tela, mas agora em modo de edição
-            return "CadastroProduto/CadastrarProduto";
-        } else {
-            // Se o produto não for encontrado, redireciona
-            return "redirect:/paginaCadastroProdutos";
-        }
-    }
-
-    
-
-
-
-    // ===============================
-    // CADASTRAR OU ATUALIZAR PRODUTO
+    // CADASTRAR OU ATUALIZAR PRODUTO (FORM TRADICIONAL)
     // ===============================
     @PostMapping("/paginaCadastroProdutos")
     public String cadastrarOuAtualizarProduto(
@@ -166,53 +51,198 @@ public class ProdutoViewController {
             Produto produto;
 
             if (idProdutoEdicao != null) {
-                // Se for edição, busca o produto
                 Optional<Produto> opt = produtoService.buscarPorId(idProdutoEdicao);
                 if (opt.isEmpty())
                     throw new RuntimeException("Produto não encontrado");
                 produto = opt.get();
             } else {
-                // Caso contrário, cria novo
                 produto = new Produto();
             }
 
-
-            // Preenche os dados do produto com os dados do DTO
-            produto.setNm_produto(produtoDTO.getNm_produto());
-            produto.setDescricao_produto(produtoDTO.getDescricao_produto());
-            produto.setQtd_produto(produtoDTO.getQtd_produto());
-            produto.setPreco_produto(new BigDecimal(produtoDTO.getPreco_produto()));
+            produto.setNome(produtoDTO.getNome());
+            produto.setDescricao(produtoDTO.getDescricao());
+            produto.setQuantidade(produtoDTO.getQuantidade());
+            produto.setPreco(new BigDecimal(produtoDTO.getPreco()));
             produto.setCategoria(produtoDTO.getCategoria());
 
-
-            // Trata imagem, se enviada
             MultipartFile imagem = produtoDTO.getImagem();
             if (imagem != null && !imagem.isEmpty()) {
                 produto.setImagem(imagem.getBytes());
             }
 
-            // Associa o produto à empresa da sessão
             produto.setEmpresa(empresa);
-            // Salva ou atualiza no banco
             produtoService.salvarProduto(produto);
 
-            // Mensagem de sucesso para o usuário
-            model.addAttribute("msg", idProdutoEdicao != null 
-            ? "Produto atualizado com sucesso!" 
-            : "Produto cadastrado com sucesso!");
+            model.addAttribute("msg", idProdutoEdicao != null
+                    ? "Produto atualizado com sucesso!"
+                    : "Produto cadastrado com sucesso!");
 
         } catch (Exception e) {
-            // Em caso de erro, exibe mensagem
-            model.addAttribute("msg", "Erro "+ e.getMessage());
+            model.addAttribute("msg", "Erro: " + e.getMessage());
         }
 
-
-        // Recarrega os dados para exibir na tela
         model.addAttribute("produtos", produtoService.listarPorEmpresa(empresa));
         model.addAttribute("produtoDTO", new ProdutoDTO());
+        model.addAttribute("idProdutoEdicao", null);
 
-        // Retorna para a mesma tela
         return "CadastroProduto/CadastrarProduto";
     }
+
+    // ===============================
+    // LISTAR PRODUTOS DA EMPRESA PARA AJAX
+    // ===============================
+    @GetMapping("/produto/listar-ajax")
+    @ResponseBody
+    public List<ProdutoDTO> listarProdutosAjax(@SessionAttribute("empresaLogado") Empresa empresa) {
+        List<Produto> produtos = produtoService.listarPorEmpresa(empresa);
+        return produtos.stream().map(p -> {
+            ProdutoDTO dto = new ProdutoDTO();
+            dto.setId(p.getId());
+            dto.setNome(p.getNome());
+            dto.setDescricao(p.getDescricao());
+            dto.setQuantidade(p.getQuantidade());
+            dto.setPreco(p.getPreco().toString());
+            dto.setCategoria(p.getCategoria());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    // ===============================
+    // BUSCAR PRODUTO PARA EDIÇÃO (AJAX)
+    // ===============================
+    @GetMapping("/produto/editar-ajax/{id}")
+    @ResponseBody
+    public ProdutoDTO buscarProdutoParaEdicaoAjax(@PathVariable("id") Long id) {
+        return produtoService.buscarPorId(id)
+                .map(p -> {
+                    ProdutoDTO dto = new ProdutoDTO();
+                    dto.setId(p.getId());
+                    dto.setNome(p.getNome());
+                    dto.setDescricao(p.getDescricao());
+                    dto.setQuantidade(p.getQuantidade());
+                    dto.setPreco(p.getPreco().toString());
+                    dto.setCategoria(p.getCategoria());
+                    return dto;
+                })
+                .orElse(null);
+    }
+
+    // ===============================
+    // ATUALIZAR PRODUTO (AJAX)
+    // ===============================
+    @PostMapping("/produto/atualizar-ajax")
+    @ResponseBody
+    public String atualizarProdutoAjax(@ModelAttribute ProdutoDTO produtoDTO,
+            @RequestParam Long idProdutoEdicao,
+            @SessionAttribute("empresaLogado") Empresa empresa) throws Exception {
+        Optional<Produto> opt = produtoService.buscarPorId(idProdutoEdicao);
+        if (opt.isEmpty())
+            return "Produto não encontrado";
+
+        Produto produto = opt.get();
+        produto.setNome(produtoDTO.getNome());
+        produto.setDescricao(produtoDTO.getDescricao());
+        produto.setQuantidade(produtoDTO.getQuantidade());
+        produto.setPreco(new BigDecimal(produtoDTO.getPreco()));
+        produto.setCategoria(produtoDTO.getCategoria());
+
+        MultipartFile imagem = produtoDTO.getImagem();
+        if (imagem != null && !imagem.isEmpty()) {
+            produto.setImagem(imagem.getBytes());
+        }
+
+        produtoService.salvarProduto(produto);
+        return "Produto atualizado com sucesso!";
+    }
+
+    // ===============================
+    // EXCLUIR PRODUTO (AJAX)
+    // ===============================
+    @PostMapping("/produto/excluir-ajax/{id}")
+    @ResponseBody
+    public String excluirProdutoAjax(@PathVariable Long id) {
+        produtoService.deletarProduto(id);
+        return "Produto excluído com sucesso!";
+    }
+
+    // ===============================
+    // EXIBIR IMAGEM
+    // ===============================
+    @GetMapping("/imagem/{id}")
+    @ResponseBody
+    public byte[] exibirImagem(@PathVariable Long id) {
+        return produtoService.buscarPorId(id)
+                .map(p -> p.getImagem() != null ? p.getImagem() : new byte[0])
+                .orElse(new byte[0]);
+    }
+
+    // ===============================
+    // LISTAR PRODUTOS PARA CLIENTES
+    // ===============================
+    @GetMapping("/produtos")
+    public String listarProdutosParaClientes(
+            @RequestParam(value = "busca", required = false) String busca,
+            Model model) {
+
+        List<Produto> produtos;
+
+        if (busca == null || busca.trim().isEmpty()) {
+            produtos = produtoService.listarTodosProdutos();
+        } else {
+            produtos = produtoService.listarPorNome(busca);
+        }
+
+        model.addAttribute("produtos", produtos);
+        model.addAttribute("busca", busca); // Para manter o valor no input
+        return "Produtos/produtos";
+    }
+
+
+
+
+
+
+    @DeleteMapping("/paginaCadastroProdutos/excluir/{id}")
+    public ResponseEntity<Void> excluirProduto(@PathVariable Long id) {
+        produtoService.excluirProduto(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+
+
+    @GetMapping("/buscar-ajax")
+    @ResponseBody
+    public List<ProdutoDTO> buscarProdutosAjax(
+            @RequestParam(value = "nome", required = false) String nome,
+            @SessionAttribute("empresaLogado") Empresa empresa) {
+
+        List<Produto> produtos;
+
+        if (nome == null || nome.trim().isEmpty()) {
+            produtos = produtoService.listarPorEmpresa(empresa);
+        } else {
+            produtos = produtoService.listarPorEmpresa(empresa).stream()
+                    .filter(p -> p.getNome().toLowerCase().contains(nome.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        return produtos.stream().map(p -> {
+            ProdutoDTO dto = new ProdutoDTO();
+            dto.setId(p.getId());
+            dto.setNome(p.getNome());
+            dto.setDescricao(p.getDescricao());
+            dto.setQuantidade(p.getQuantidade());
+            dto.setPreco(p.getPreco().toString());
+            dto.setCategoria(p.getCategoria());
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+
+    
 
 }

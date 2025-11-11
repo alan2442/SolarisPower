@@ -5,6 +5,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.example.solarispower.models.Pessoa;
 
 public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
-    Pessoa findByCdPessoa(Long cdPessoa);
+
+    // busca por email e senha — usado no login
     Pessoa findByEmailPessoaAndSenhaPessoa(String emailPessoa, String senhaPessoa);
+
 }

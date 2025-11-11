@@ -1,0 +1,15 @@
+.input-group .btn {
+        border-radius: 0 5px 5px 0; /* Arredonda o canto do botão */
+    }
+
+    .input-group-append {
+        cursor: pointer;
+    }
+
+    .input-group .form-control {
+        border-radius: 5px 0 0 5px; /* Arredonda o canto do input */
+    }
+
+    .input-group .btn i {
+        color: #007bff; /* Cor azul para o ícone de lupa */
+    }

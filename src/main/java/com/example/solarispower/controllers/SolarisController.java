@@ -30,11 +30,7 @@ public class SolarisController {
         return "Index/index";
     }
 
-    /* Rota Produtos */
-    @GetMapping("/produtos")
-    public String produtos() {
-        return "Produtos/produtos";
-    }
+    
 
     /* Rota Suporte */
     @GetMapping("/suporte")
@@ -59,6 +55,12 @@ public class SolarisController {
     @GetMapping("/cadastrarProduto")
     public String cadastrarProduto() {
         return "CadastroProduto/CadastrarProduto";
+    }
+
+    /* Rota CalculadoraSolar */
+    @GetMapping("/calculadoraSolar") 
+    public String calculadoraSolar() {
+        return "CalculadoraSolar/calculadora";
     }
 
 
