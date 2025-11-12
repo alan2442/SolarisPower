@@ -24,20 +24,27 @@
 
     <title>Cadastrar Produto</title>
 
+    <script src="/js/script.js"></script>
+
 
 </head>
 
 <body class="tamanhobody">
 
-    <!-- Cabeçalho -->
+    <!-- Começo Cabeçalho ____________________ -->
     <header class="header">
+
+
         <div class="container">
+
+            <!-- Logo-->
             <div class="logo">
                 <a href="/index2">
                     <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
                 </a>
             </div>
 
+            <!-- Links NavBar-->
             <nav class="main-nav">
                 <ul>
                     <li><a href="/produtos">Produtos</a></li>
@@ -47,6 +54,7 @@
                 </ul>
             </nav>
 
+
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="O que procura hoje?">
                 <button class="search-button">
@@ -54,25 +62,34 @@
                 </button>
             </div>
 
+
+            <!-- Botão para Perfil e Carrinho-->
             <div class="user-actions">
                 <div class="user-login">
                     <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
-                    <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
+                    <button onclick="verificarLogin()" class="user-login-action" style="margin: none; padding: 0; background-color: aliceblue;">Visualizar meu Perfil</button>
+
                 </div>
+
+
+
 
                 <a href="/carrinho" class="cart-button">
                     <i class="fas fa-shopping-cart cart-icon"></i>
                     <span class="cart-count">0</span>
                 </a>
+
             </div>
+
+
         </div>
     </header>
-    <!-- Fim Cabeçalho -->
+    <!-- Fim Cabeçalho ____________________ -->
 
     <!-- Formulário de cadastro -->
     <main>
         <form th:action="@{/paginaCadastroProdutos}" method="post" enctype="multipart/form-data"
-            th:object="${produtoDTO}">
+            th:object="${produtoDTO}" class="produtos-cadastrados">
             <h1 id="titulo-form">Cadastrar Produto</h1>
 
             <label for="nome">Nome do Produto</label>

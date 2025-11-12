@@ -1,8 +1,7 @@
 function mascaraCEP(campo) {
-  // Remove tudo o que não for número
-  campo.value = campo.value.replace(/\D/g, "")
-    // Adiciona o hífen após os 5 primeiros números
-    .replace(/^(\d{5})(\d)/, "$1-$2");
+  campo.value = campo.value
+    .replace(/\D/g, '')          // Remove tudo o que não for número
+    .replace(/^(\d{5})(\d)/, '$1-$2'); // Adiciona o hífen
 }
 
 
@@ -32,9 +31,3 @@ function mascaraDataNascimento(campo) {
 }
 
 
-function mascaraCEP(campo) {
-  // Remove tudo o que não for número
-  campo.value = campo.value.replace(/\D/g, "")
-    // Adiciona o hífen após os 5 primeiros números
-    .replace(/^(\d{5})(\d)/, "$1-$2");
-}
