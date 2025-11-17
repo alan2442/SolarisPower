@@ -1,52 +1,61 @@
 <!DOCTYPE html>
+<!-- Declaração do tipo de documento HTML5 -->
 <html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
+<!-- lang define o idioma da página como português do Brasil
+     xmlns:th permite o uso de atributos do Thymeleaf
+     xmlns: define namespace para layouts Thymeleaf -->
 
 <head>
     <meta charset="UTF-8">
+    <!-- Define a codificação de caracteres como UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configura o viewport para responsividade em dispositivos móveis -->
 
+    <!-- Importação de arquivos CSS personalizados -->
     <link rel="stylesheet" href="../Style/style.css">
     <link rel="stylesheet" href="Style/global.css">
     <link rel="stylesheet" href="Style/header.css">
     <link rel="stylesheet" href="Style/loginEmpresa.css">
     <link rel="stylesheet" href="Style/footer.css">
+
+    <!-- Importação de biblioteca de ícones Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Importação do Bootstrap para estilos e componentes responsivos -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Preconnect para otimização no carregamento de fontes Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
 
-
+    <!-- Favicon e ícones da página -->
     <link rel="apple-touch-icon" sizes="180x180" href="Images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
 
     <title>Login Empresa</title>
+    <!-- Importação de scripts JavaScript personalizados -->
     <script src="/js/verificarLogin.js"></script>
     <script src="/js/script.js"></script>
-
-
-
 </head>
 
 <body id="bodymod">
+    <!-- Corpo da página com ID para estilização específica -->
 
     <!-- Começo Cabeçalho ____________________ -->
     <header class="header">
-
-
         <div class="container">
 
-            <!-- Logo-->
+            <!-- Logo da empresa com link para a página inicial -->
             <div class="logo">
                 <a href="/index2">
                     <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
                 </a>
             </div>
 
-            <!-- Links NavBar-->
+            <!-- Menu de navegação principal -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="/produtos">Produtos</a></li>
@@ -56,7 +65,7 @@
                 </ul>
             </nav>
 
-
+            <!-- Barra de pesquisa -->
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="O que procura hoje?">
                 <button class="search-button">
@@ -64,82 +73,80 @@
                 </button>
             </div>
 
-
-            <!-- Botão para Perfil e Carrinho-->
+            <!-- Ações do usuário: login e carrinho -->
             <div class="user-actions">
                 <div class="user-login">
                     <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
                     <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
-
                 </div>
 
+                <!-- Ícone do carrinho de compras -->
                 <a href="/carrinho" class="cart-button">
                     <i class="fas fa-shopping-cart cart-icon"></i>
                     <span class="cart-count">0</span>
                 </a>
             </div>
-
-
         </div>
     </header>
     <!-- Fim Cabeçalho ____________________ -->
 
-
-
-
-
-    <!--Começo login Empresa-->
+    <!-- Começo login Empresa -->
     <main class="main-content">
-
         <div class="container">
 
-
-            <!--Mensagem de Empresa cadastrada-->
+            <!-- Mensagem de sucesso após cadastro da empresa -->
             <div th:if="${mensagemCadastroEmpresa}" class="alert alert-success" role="alert">
                 <span th:text="${mensagemCadastroEmpresa}"></span>
             </div>
 
+            <!-- Mensagem de erro de login -->
+            <div th:if="${erro}" class="alert alert-danger" role="alert" style="margin-top: 10px;">
+                <i class="fas fa-exclamation-circle"></i>
+                <span th:text="${erro}"></span>
+            </div>
 
+            <!-- Container do formulário de login -->
             <div class="login-container">
                 <div class="login-box">
-
                     <div class="login-header">
                         <h2 class="login-title">ENTRAR COMO EMPRESA</h2>
                     </div>
 
+                    <!-- Formulário de login usando Thymeleaf para POST -->
                     <form id="loginForm" class="login-form" th:action="@{/loginEmpresa}" method="post">
-
+                        <!-- Campo de email da empresa -->
                         <div class="form-group">
                             <input type="text" name="emailEmpresa" id="emailEmpresa" placeholder="Email da Empresa"
                                 maxlength="50" autofocus required>
                         </div>
+
+                        <!-- Campo de senha da empresa -->
                         <div class="form-group">
                             <input type="password" name="senhaEmpresa" id="senhaEmpresa" placeholder="Sua senha"
                                 maxlength="20" required>
                         </div>
+
+                        <!-- Botão de envio do formulário -->
                         <div class="form-group">
                             <button type="submit" class="btn btn-login">ENTRAR</button>
                         </div>
+
+                        <!-- Links adicionais para cadastro e login de clientes/empresas -->
                         <div class="form-links">
-                            <p id="pcad">Não possui uma conta de Empresa? <a href="/cadastrarEmpresa" id="acad">Criar conta!</a>
-                            </p>
+                            <p id="pcad">Não possui uma conta de Empresa? <a href="/cadastrarEmpresa" id="acad">Criar
+                                    conta!</a></p>
                             <p id="pcad"><a href="/cadastrarUsuario" id="acad">Cadastrar como Cliente</a></p>
                             <p id="pcad"><a href="/loginUsuario" id="acad">Entrar como Cliente</a></p>
                         </div>
-
                     </form>
                 </div>
             </div>
 
-
         </div>
     </main>
-    <!--Fim login Empresa-->
+    <!-- Fim login Empresa -->
 
-
-
-
-
+    <!-- Scripts JavaScript externos: jQuery, Popper.js e Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -150,7 +157,5 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
-
 </body>
-
 </html>

@@ -10,35 +10,53 @@ import com.example.solarispower.models.Empresa;
 import com.example.solarispower.models.Produto;
 import com.example.solarispower.repository.ProdutoRepository;
 
-// Anotação @Service indica que esta classe é um componente de serviço do Spring,
-// responsável pela lógica de negócios relacionada aos produtos.
+/**
+ * Serviço responsável pela lógica de negócios relacionada à entidade Produto.
+ * 
+ * A anotação @Service indica que esta classe é um componente do Spring
+ * que pode ser injetado em controllers ou outros serviços.
+ */
 @Service
 public class ProdutoService {
 
-    // Injeta automaticamente a dependência do repositório de produtos
+    // Injeta automaticamente o repositório de produtos
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    // Busca um produto pelo seu ID, retornando um Optional que pode estar vazio
+    /**
+     * Busca um produto pelo seu ID.
+     *
+     * @param id ID do produto a ser buscado
+     * @return Optional contendo o produto, ou vazio caso não encontrado
+     */
     public Optional<Produto> buscarPorId(Long id) {
         return produtoRepository.findById(id);
     }
 
-    // Salva um novo produto no banco de dados (ou atualiza se já existir)
+    /**
+     * Salva um novo produto ou atualiza um produto existente.
+     *
+     * @param produto Produto a ser salvo ou atualizado
+     * @return Produto persistido no banco de dados
+     */
     public Produto salvarProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
 
-    // Atualiza um produto existente pelo ID com os dados fornecidos em
-    // produtoAtualizado
+    /**
+     * Atualiza um produto existente com novos dados.
+     *
+     * @param id ID do produto a ser atualizado
+     * @param produtoAtualizado Objeto com os novos dados do produto
+     * @return Produto atualizado ou null se o produto não existir
+     */
     public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
         Optional<Produto> produtoExistente = produtoRepository.findById(id);
 
         if (produtoExistente.isPresent()) {
-
             Produto produto = produtoExistente.get();
 
-            // Atualiza os campos do produto existente com os dados do produto atualizado
+            // Atualiza todos os campos do produto existente
             produto.setNome(produtoAtualizado.getNome());
             produto.setDescricao(produtoAtualizado.getDescricao());
             produto.setQuantidade(produtoAtualizado.getQuantidade());
@@ -49,32 +67,55 @@ public class ProdutoService {
             produto.setImagem(produtoAtualizado.getImagem());
 
             return produtoRepository.save(produto);
-
         } else {
             return null;
         }
     }
 
-    // Deletar produto por ID
+    /**
+     * Deleta um produto pelo seu ID.
+     *
+     * @param id ID do produto a ser deletado
+     */
     public void deletarProduto(Long id) {
         produtoRepository.deleteById(id);
     }
 
-    // Listar todos os produtos
+    /**
+     * Lista todos os produtos existentes no banco de dados.
+     *
+     * @return Lista de produtos
+     */
     public List<Produto> listarTodosProdutos() {
         return (List<Produto>) produtoRepository.findAll();
     }
 
+    /**
+     * Lista produtos pertencentes a uma empresa específica.
+     *
+     * @param empresa Empresa cujos produtos serão listados
+     * @return Lista de produtos da empresa
+     */
     public List<Produto> listarPorEmpresa(Empresa empresa) {
         return produtoRepository.findByEmpresa(empresa);
     }
 
+    /**
+     * Remove um produto pelo seu ID.
+     *
+     * @param id ID do produto a ser removido
+     */
     public void excluirProduto(Long id) {
         produtoRepository.deleteById(id);
     }
 
+    /**
+     * Lista produtos cujo nome contém a string fornecida, ignorando maiúsculas/minúsculas.
+     *
+     * @param nome Nome parcial do produto
+     * @return Lista de produtos correspondentes ao critério
+     */
     public List<Produto> listarPorNome(String nome) {
         return produtoRepository.findByNomeContainingIgnoreCase(nome);
     }
-
 }

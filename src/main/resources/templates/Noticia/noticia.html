@@ -1,51 +1,67 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
-
+<!-- Declaração do tipo de documento HTML5 e configuração do idioma do site para português brasileiro.
+     Inclusão de namespaces para integração com Thymeleaf (template engine) -->
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define a codificação de caracteres para UTF-8, suportando caracteres especiais do português -->
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Configuração de viewport para responsividade em dispositivos móveis -->
+
+    <!-- Inclusão de arquivos CSS locais para estilização da página -->
     <link rel="stylesheet" href="../Style/style.css">
     <link rel="stylesheet" href="Style/global.css">
     <link rel="stylesheet" href="Style/header.css">
     <link rel="stylesheet" href="Style/footer.css">
+
+    <!-- Inclusão da biblioteca de ícones Font Awesome via CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Inclusão do framework Bootstrap via CDN para layout responsivo e componentes prontos -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Pré-conexão com Google Fonts para otimização de carregamento -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importação da fonte "Inter" do Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
 
+    <!-- Inclusão de scripts JavaScript personalizados -->
     <script src="funcoes.js"></script>
 
+    <!-- Ícones para dispositivos Apple e favicon do site -->
     <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
 
     <title>Página Notícia</title>
+    <!-- Inclusão de scripts adicionais para funcionalidades do site -->
     <script src="/js/verificarLogin.js"></script>
     <script src="/js/script.js"></script>
 
 </head>
 
 <body class="tamanhobodynoticia" id="bodymod2">
+<!-- Corpo da página com classe para estilização específica e id para manipulação via JS -->
 
      <!-- Começo Cabeçalho ____________________ -->
     <header class="header">
-
+        <!-- Cabeçalho principal do site -->
 
         <div class="container">
+            <!-- Container centraliza o conteúdo e limita a largura máxima -->
 
-            <!-- Logo-->
+            <!-- Logo do site com link para a página inicial -->
             <div class="logo">
                 <a href="/index2">
                     <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
                 </a>
             </div>
 
-            <!-- Links NavBar-->
+            <!-- Navegação principal -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="/produtos">Produtos</a></li>
@@ -55,7 +71,7 @@
                 </ul>
             </nav>
 
-
+            <!-- Barra de pesquisa com input e botão de busca -->
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="O que procura hoje?">
                 <button class="search-button">
@@ -63,29 +79,29 @@
                 </button>
             </div>
 
-
-            <!-- Botão para Perfil e Carrinho-->
+            <!-- Botões de ação do usuário: login e carrinho -->
             <div class="user-actions">
                 <div class="user-login">
                     <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
+                    <!-- Botão que chama função JS para verificar login -->
                     <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
-                    
                 </div>
 
+                <!-- Ícone do carrinho com contador de itens -->
                 <a href="/carrinho" class="cart-button">
                     <i class="fas fa-shopping-cart cart-icon"></i>
                     <span class="cart-count">0</span>
                 </a>
             </div>
-
-
         </div>
     </header>
     <!-- Fim Cabeçalho ____________________ -->
     
-
+    <!-- Seção de notícias -->
     <div class="linha">
+        <!-- Container para organizar as notícias em linha -->
         <div class="imagem-container">
+            <!-- Link externo da notícia com imagem e descrição -->
             <a id="acad1"
                 href="https://canalsolar.com.br/geracao-solar-centralizada-cresce-915-na-primeira-quinzena-de-novembro/">
                 <img src="Images/noticia1.jpg" alt="Crescimento na Geração de energia solar." id="noticias">
@@ -106,8 +122,7 @@
             <a id="acad1"
                 href="https://solarz.com.br/cinco-mudancas-trazidas-pela-lei-14-300-para-o-mercado-de-energia-solar/">
                 <img src="Images/noticia3.jpg" alt="Lei 14.300 para o mercado de energia solar." id="noticias">
-                <p>Taxa solar: veja o que muda para o consumidor com as novas regras sobre a geração própria de energia.
-                </p>
+                <p>Taxa solar: veja o que muda para o consumidor com as novas regras sobre a geração própria de energia.</p>
             </a>
         </div>
         <div class="imagem-container">
@@ -124,6 +139,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
+                <!-- Seção de categorias -->
                 <div class="footer-section">
                     <h4>Categorias</h4>
                     <ul>
@@ -133,6 +149,7 @@
                         <li><a href="/produtos">Kits Completos</a></li>
                     </ul>
                 </div>
+                <!-- Seção institucional -->
                 <div class="footer-section">
                     <h4>Institucional</h4>
                     <ul>
@@ -141,6 +158,7 @@
                         <li><a href="/duvidas">Dúvidas Frequentes</a></li>
                     </ul>
                 </div>
+                <!-- Seção de atendimento -->
                 <div class="footer-section">
                     <h4>Atendimento</h4>
                     <ul>
@@ -149,19 +167,16 @@
                         <li><a href="">Termos de Uso</a></li>
                     </ul>
                 </div>
-
             </div>
+            <!-- Direitos autorais -->
             <div class="copyright">
                 <p>&copy; <span id="current-year">2025</span> SolarisPower. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
-
     <!-- Fim Rodapé  ------------------ -->
 
-
-
-
+    <!-- Inclusão de bibliotecas JavaScript externas para Bootstrap e funcionalidades -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -171,7 +186,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
 
 </body>
 

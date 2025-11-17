@@ -1,59 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
 
-
 <head>
+    <!-- Definição de charset e responsividade da página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Importação de estilos CSS customizados -->
     <link rel="stylesheet" href="Style/style.css">
     <link rel="stylesheet" href="Style/global.css">
     <link rel="stylesheet" href="Style/header.css">
     <link rel="stylesheet" href="Style/calculadora.css">
 
-
+    <!-- Importação de Bootstrap para estilos e componentes prontos -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!-- Importação de fontes do Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+    
+    <!-- Importação de ícones do Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-
-
+    <!-- Favicon para diferentes dispositivos -->
     <link rel="apple-touch-icon" sizes="180x180" href="IMG/favicon_io/apple-touch-icon.pn">
     <link rel="icon" type="image/png" sizes="32x32" href="IMG/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="IMG/favicon_io/favicon-16x16.png">
 
-
     <title>Página Inicial</title>
 
-
+    <!-- Scripts JS customizados -->
     <script src="/js/verificarLogin.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/script.js"></script>
     <script src="/js/calculadora.js"></script>
-
-
 </head>
 
 <body class="tamanhobody">
 
-
     <!-- Começo Cabeçalho ____________________ -->
     <header class="header">
-
-
         <div class="container">
 
-            <!-- Logo-->
+            <!-- Logo do site com link para a página inicial -->
             <div class="logo">
                 <a href="/index2">
                     <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
                 </a>
             </div>
 
-            <!-- Links NavBar-->
+            <!-- Menu de navegação principal -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="/produtos">Produtos</a></li>
@@ -63,7 +61,7 @@
                 </ul>
             </nav>
 
-
+            <!-- Barra de busca -->
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="O que procura hoje?">
                 <button class="search-button">
@@ -71,38 +69,30 @@
                 </button>
             </div>
 
-
-            <!-- Botão para Perfil e Carrinho-->
+            <!-- Área de ações do usuário: perfil e carrinho -->
             <div class="user-actions">
                 <div class="user-login">
                     <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
                     <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
-
                 </div>
 
-
-
-
+                <!-- Link para o carrinho de compras -->
                 <a href="/carrinho" class="cart-button">
                     <i class="fas fa-shopping-cart cart-icon"></i>
                     <span class="cart-count">0</span>
                 </a>
-
             </div>
-
 
         </div>
     </header>
     <!-- Fim Cabeçalho ____________________ -->
 
-
-
-
-    <!-- Começo Calculadora ____________________ -->
+    <!-- Começo Calculadora de economia de energia solar ____________________ -->
     <div class="centralizar-container">
         <div class="container2">
             <h1>SOLARISPOWER</h1>
 
+            <!-- Formulário de entrada de dados -->
             <div id="formulario">
                 <div class="form-group">
                     <label for="cep">Insira seu CEP:</label>
@@ -136,13 +126,16 @@
                     <input type="email" id="email" placeholder="E-mail">
                 </div>
 
+                <!-- Botão para simular o gerador de energia -->
                 <button id="simular">Simular seu gerador de energia</button>
 
+                <!-- Termos de uso -->
                 <div class="terms">
                     Ao prosseguir você está de acordo com os Termos e Condições de Uso da Solarispower.
                 </div>
             </div>
 
+            <!-- Resultados da simulação -->
             <div id="resultado" class="resultado">
                 <h2>Sua Economia com Energia Solar</h2>
 
@@ -165,26 +158,14 @@
                     Você pode economizar até R$ 0,00 por ano!
                 </div>
 
+                <!-- Botão para reiniciar a simulação -->
                 <button id="nova-simulacao" class="btn-nova-simulacao">Fazer nova simulação</button>
             </div>
         </div>
     </div>
-
-
-
     <!-- Fim Calculadora ____________________ -->
 
-
-
-
-
-
-
-
-
-
-
-
+    <!-- Scripts de bibliotecas externas para suporte ao Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -195,10 +176,5 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
-
-
-
-
 </body>
-
 </html>

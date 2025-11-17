@@ -1,56 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://thymeleaf.org" xmlns:="http://www.ultraq.net.nz//thymeleaf/layout">
-
+<!--
+  Documento HTML para cadastro de usuário no site SolarisPower.
+  Utiliza Thymeleaf para renderização dinâmica no backend (Spring Boot).
+  Atributos xmlns são utilizados para integração com Thymeleaf e layouts.
+-->
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define a codificação de caracteres como UTF-8 -->
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Responsividade: largura da viewport igual à largura do dispositivo -->
+
+    <!-- Links para arquivos CSS internos -->
     <link rel="stylesheet" href="../Style/style.css">
     <link rel="stylesheet" href="Style/global.css">
     <link rel="stylesheet" href="Style/header.css">
     <link rel="stylesheet" href="Style/cadastroUsuario.css">
     <link rel="stylesheet" href="Style/footer.css">
+
+    <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Fonts Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
 
+    <!-- Scripts JS internos -->
     <script src="../../../mvc/mascarasInputs.js"></script>
 
+    <!-- Favicons para diferentes dispositivos -->
     <link rel="apple-touch-icon" sizes="180x180" href="Images/favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="Images/favicon_io/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="Images/favicon_io/favicon-16x16.png">
 
     <title>Cadastro de Usuário</title>
+    <!-- Título da página -->
+
+    <!-- Scripts de validação e funcionalidade -->
     <script src="/js/verificarLogin.js"></script>
     <script src="/js/mascaras.js"></script>
     <script src="/js/script.js"></script>
-
-
-
-
 </head>
 
 <body id="bodymod">
+    <!-- Corpo principal da página -->
 
-    <!-- Começo Cabeçalho ____________________ -->
+    <!-- Cabeçalho do site -->
     <header class="header">
-
-
         <div class="container">
-
-            <!-- Logo-->
+            <!-- Logo -->
             <div class="logo">
                 <a href="/index2">
                     <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
                 </a>
             </div>
 
-            <!-- Links NavBar-->
+            <!-- Menu de navegação principal -->
             <nav class="main-nav">
                 <ul>
                     <li><a href="/produtos">Produtos</a></li>
@@ -60,7 +72,7 @@
                 </ul>
             </nav>
 
-
+            <!-- Barra de pesquisa -->
             <div class="search-bar">
                 <input type="text" class="search-input" placeholder="O que procura hoje?">
                 <button class="search-button">
@@ -68,13 +80,11 @@
                 </button>
             </div>
 
-
-            <!-- Botão para Perfil e Carrinho-->
+            <!-- Área de ações do usuário: perfil e carrinho -->
             <div class="user-actions">
                 <div class="user-login">
                     <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
                     <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
-
                 </div>
 
                 <a href="/carrinho" class="cart-button">
@@ -82,83 +92,81 @@
                     <span class="cart-count">0</span>
                 </a>
             </div>
-
-
         </div>
     </header>
-    <!-- Fim Cabeçalho ____________________ -->
-
-
-
-
+    <!-- Fim do cabeçalho -->
 
     <main class="main-content">
-
         <div class="container">
-
-            <!--Começo cadastro de Usuario-->
+            <!-- Formulário de cadastro de usuário -->
             <div class="cadastro-container">
                 <div class="cadastro-box">
-
                     <div class="cadastro-header">
                         <h2 class="cadastro-title">CADASTRO DE CLIENTE</h2>
                     </div>
 
+                    <div th:if="${erroCadastro}" class="alert alert-danger" style="text-align:center;">
+                        <p th:text="${erroCadastro}"></p>
+                    </div>
+
+                    <!-- Formulário principal -->
                     <form id="cadastroForm" class="cadastro-form" th:action="@{/cadastroUsuario}" th:object="${pessoa}"
                         method="post">
-
+                        <!-- Campo Nome Completo -->
                         <div class="form-group">
                             <input type="text" th:field="*{nmPessoa}" required name="nm_pessoa" id="nm_pessoa"
                                 placeholder="Nome Completo" maxlength="50" autofocus>
                         </div>
+
+                        <!-- Campo Data de Nascimento com máscara -->
                         <div class="form-group">
                             <input type="text" name="dt_nascimento" id="dt_nascimento" placeholder="Data de Nascimento"
                                 oninput="mascaraDataNascimento(this)" maxlength="8" th:field="*{dtNascimento}" required>
                         </div>
+
+                        <!-- Campo Email -->
                         <div class="form-group">
                             <input type="text" name="email_pessoa" id="email_pessoa" placeholder="Email" maxlength="50"
                                 th:field="*{emailPessoa}" required>
                         </div>
+
+                        <!-- Campo CPF com máscara -->
                         <div class="form-group">
                             <input type="text" name="cpf_pessoa" id="cpf_pessoa" placeholder="CPF" maxlength="14"
                                 th:field="*{cpfPessoa}" required oninput="mascaraCPF(this)">
                         </div>
+
+                        <!-- Campo Senha -->
                         <div class="form-group">
                             <input type="password" name="senha_pessoa" id="senha_pessoa" placeholder="Senha"
                                 maxlength="20" th:field="*{senhaPessoa}" required>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="confSenha" id="confSenha" placeholder="Confirme sua senha" maxlength="20">
-                        </div>
-                        
 
+                        <!-- Campo Confirmação de Senha -->
+                        <div class="form-group">
+                            <input type="password" name="confSenha" id="confSenha" placeholder="Confirme sua senha"
+                                maxlength="20">
+                        </div>
+
+                        <!-- Botão de envio -->
                         <div class="form-group">
                             <button type="submit" class="btn btn-cadastro">CADASTRAR</button>
                         </div>
+
+                        <!-- Links auxiliares -->
                         <div class="form-links">
-                            <p id="pcad">Já possuo uma conta, <a href="/loginUsuario" id="acad">Entrar</a>
-                            </p>
+                            <p id="pcad">Já possuo uma conta, <a href="/loginUsuario" id="acad">Entrar</a></p>
                             <p id="pcad"><a href="/cadastrarEmpresa" id="acad">Cadastrar minha Empresa</a></p>
                             <p id="pcad"><a href="/loginEmpresa" id="acad">Entrar como Empresa</a></p>
                         </div>
-
                     </form>
                 </div>
             </div>
-            <!--Fim cadastro de Usuario-->
-
-
+            <!-- Fim do cadastro de usuário -->
         </div>
     </main>
 
-
-
-
-
-
-
-
-
+    <!-- Scripts JS do Bootstrap e dependências -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -170,6 +178,18 @@
         crossorigin="anonymous"></script>
 
 
+    <script>
+        document.getElementById("cadastroForm").addEventListener("submit", function (e) {
+            const senha = document.getElementById("senha_pessoa").value;
+            const confirmar = document.getElementById("confSenha").value;
+
+            if (senha !== confirmar) {
+                e.preventDefault();
+                alert("❌ As senhas não coincidem! Digite novamente.");
+                return false;
+            }
+        });
+    </script>
 </body>
 
 </html>

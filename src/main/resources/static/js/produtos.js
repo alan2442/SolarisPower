@@ -1,26 +1,27 @@
 // produtos.js - Agente JavaScript
 // Funções específicas para a página de produtos do site SolarisPower
 
+// Executa o código quando o DOM estiver completamente carregado
 document.addEventListener('DOMContentLoaded', function() {
-    // Carregar produtos
+    // Carrega a lista de produtos
     loadProdutos();
     
-    // Inicializar filtros
+    // Inicializa os filtros de categoria e preço
     initFiltros();
     
-    // Atualizar contador do carrinho
+    // Atualiza o contador de itens no carrinho
     updateCartCounter();
 });
 
-// Função para carregar produtos
+// Função para carregar produtos na página
 function loadProdutos() {
     const produtosGrid = document.getElementById('produtos-grid');
     
-    if (!produtosGrid) return;
+    if (!produtosGrid) return; // Verifica se o container de produtos existe
     
-    // Simular carregamento
+    // Simula um carregamento assíncrono (em produção, os dados viriam de uma API)
     setTimeout(() => {
-        // Simulação de dados de produtos (em um cenário real, estes viriam de uma API)
+        // Lista de produtos simulada
         const produtos = [
             {
                 id: 1,
@@ -72,27 +73,28 @@ function loadProdutos() {
             }
         ];
         
-        // Limpar o grid de produtos
+        // Limpa o grid antes de adicionar novos produtos
         produtosGrid.innerHTML = '';
         
-        // Adicionar os produtos ao grid
+        // Cria e adiciona cada produto ao grid
         produtos.forEach(produto => {
             const produtoCard = createProdutoCard(produto);
             produtosGrid.appendChild(produtoCard);
         });
         
-        // Aplicar filtros iniciais da URL
+        // Aplica filtros iniciais baseados na URL (se houver)
         applyUrlFilters();
-    }, 1000);
+    }, 1000); // Simula atraso de 1 segundo
 }
 
-// Função para criar um card de produto
+// Função para criar um card visual de produto
 function createProdutoCard(produto) {
     const card = document.createElement('div');
     card.className = 'product-card';
-    card.dataset.categoria = produto.categoria;
-    card.dataset.preco = produto.price;
+    card.dataset.categoria = produto.categoria; // Armazena categoria para filtragem
+    card.dataset.preco = produto.price;         // Armazena preço para filtragem
     
+    // Define o HTML do card com imagem, informações e ações
     card.innerHTML = `
         <div class="product-image">
             <img src="${produto.image}" alt="${produto.name}" onerror="this.src='../assets/images/produto-placeholder.jpg'">
@@ -108,16 +110,18 @@ function createProdutoCard(produto) {
         </div>
     `;
     
-    // Adicionar evento ao botão de adicionar ao carrinho
+    // Adiciona evento ao botão "Adicionar ao Carrinho"
     const addToCartButton = card.querySelector('.add-to-cart');
     addToCartButton.addEventListener('click', function() {
         const quantityInput = card.querySelector('.quantity-input');
         const quantity = parseInt(quantityInput.value);
         
         if (quantity > 0) {
+            // Adiciona o produto ao carrinho e mostra alerta de sucesso
             addToCart(produto.id, quantity);
             showAlert(`${quantity} unidade(s) de ${produto.name} adicionado(s) ao carrinho!`, 'success');
         } else {
+            // Mostra alerta de erro se quantidade inválida
             showAlert('Por favor, selecione uma quantidade válida.', 'error');
         }
     });
@@ -125,27 +129,27 @@ function createProdutoCard(produto) {
     return card;
 }
 
-// Função para inicializar filtros
+// Função para inicializar filtros de categoria e preço
 function initFiltros() {
-    // Filtro de categorias
+    // Seleciona links de categoria
     const categoriaLinks = document.querySelectorAll('.filtro-list a[data-categoria]');
     categoriaLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Remover classe ativa de todos os links
+            // Remove classe "ativa" de todos os links
             categoriaLinks.forEach(l => l.classList.remove('active'));
             
-            // Adicionar classe ativa ao link clicado
+            // Adiciona classe "ativa" ao link clicado
             this.classList.add('active');
             
-            // Aplicar filtro
+            // Filtra produtos pela categoria selecionada
             const categoria = this.dataset.categoria;
             filtrarPorCategoria(categoria);
         });
     });
     
-    // Filtro de preço
+    // Configura filtro de preço
     const precoRange = document.getElementById('preco-range');
     const precoMax = document.getElementById('preco-max');
     
@@ -154,6 +158,7 @@ function initFiltros() {
             const valor = this.value;
             precoMax.textContent = valor >= 5000 ? 'R$5000+' : `R$${valor}`;
             
+            // Filtra produtos pelo preço máximo selecionado
             filtrarPorPreco(valor);
         });
     }
@@ -165,9 +170,9 @@ function filtrarPorCategoria(categoria) {
     
     produtos.forEach(produto => {
         if (categoria === 'todos' || produto.dataset.categoria === categoria) {
-            produto.style.display = 'block';
+            produto.style.display = 'block'; // Mostra produto
         } else {
-            produto.style.display = 'none';
+            produto.style.display = 'none';  // Esconde produto
         }
     });
 }
@@ -187,16 +192,15 @@ function filtrarPorPreco(precoMaximo) {
     });
 }
 
-// Função para aplicar filtros da URL
+// Aplica filtros com base nos parâmetros da URL (ex.: ?categoria=kits)
 function applyUrlFilters() {
     const urlParams = new URLSearchParams(window.location.search);
     const categoriaParam = urlParams.get('categoria');
     
     if (categoriaParam) {
         const categoriaLink = document.querySelector(`.filtro-list a[data-categoria="${categoriaParam}"]`);
-        
         if (categoriaLink) {
-            // Simular clique no link da categoria
+            // Simula clique no link correspondente à categoria
             categoriaLink.click();
         }
     }
@@ -204,31 +208,29 @@ function applyUrlFilters() {
 
 // Função para adicionar produto ao carrinho
 function addToCart(productId, quantity) {
-    // Obter o carrinho atual do localStorage ou criar um novo
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Recupera carrinho do localStorage
     
-    // Verificar se o produto já está no carrinho
     const existingProductIndex = cart.findIndex(item => item.productId === productId);
     
     if (existingProductIndex !== -1) {
-        // Atualizar a quantidade se o produto já estiver no carrinho
+        // Atualiza quantidade se produto já existe no carrinho
         cart[existingProductIndex].quantity += quantity;
     } else {
-        // Adicionar novo item ao carrinho
+        // Adiciona novo produto ao carrinho
         cart.push({
             productId,
             quantity
         });
     }
     
-    // Salvar o carrinho atualizado no localStorage
+    // Salva carrinho atualizado no localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    // Atualizar o contador do carrinho no header
+    // Atualiza contador de itens no header
     updateCartCounter();
 }
 
-// Função para atualizar o contador do carrinho
+// Função para atualizar o contador de itens no carrinho do header
 function updateCartCounter() {
     const cartCounter = document.querySelector('.cart-counter');
     if (!cartCounter) return;
@@ -236,6 +238,97 @@ function updateCartCounter() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
     
-    cartCounter.textContent = totalItems;
-    cartCounter.style.display = totalItems > 0 ? 'block' : 'none';
+    cartCounter.textContent = totalItems;              // Atualiza número visível
+    cartCounter.style.display = totalItems > 0 ? 'block' : 'none'; // Mostra ou oculta contador
 }
+
+
+function removerDoCarrinho(productId) {
+    let carrinho = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Remove o produto
+    carrinho = carrinho.filter(item => item.productId !== productId);
+
+    // Salva novamente no localStorage
+    localStorage.setItem("cart", JSON.stringify(carrinho));
+
+    // Atualiza a tabela automaticamente
+    carregarCarrinho();
+
+    // Atualiza número do carrinho
+    updateCartCounter();
+
+    // Mostra mensagem
+    mostrarMensagemCarrinho("Produto removido do carrinho!", "success");
+}
+
+
+function atualizarQuantidade(productId, novaQuantidade) {
+    let carrinho = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const item = carrinho.find(p => p.productId === productId);
+    if (!item) return;
+
+    item.quantity = novaQuantidade;
+
+    if (novaQuantidade <= 0) {
+        removerDoCarrinho(productId);
+        return;
+    }
+
+    localStorage.setItem("cart", JSON.stringify(carrinho));
+
+    carregarCarrinho();
+    updateCartCounter();
+}
+
+
+
+function mostrarMensagemCarrinho(mensagem, tipo) {
+    const box = document.getElementById("mensagemCarrinho");
+    const texto = document.getElementById("textoMensagem");
+
+    texto.innerText = mensagem;
+
+    box.style.display = "block";
+
+    box.className = "alert alert-" + (tipo === "success" ? "success" : "danger");
+
+    setTimeout(() => {
+        box.style.display = "none";
+    }, 2500);
+}
+
+
+
+function carregarCarrinho() {
+    const corpo = document.getElementById("corpo");
+    corpo.innerHTML = "";
+
+    let carrinho = JSON.parse(localStorage.getItem("cart")) || [];
+
+    carrinho.forEach(item => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${item.productId}</td>
+
+            <td>
+                <input type="number" min="1" value="${item.quantity}"
+                    class="form-control"
+                    onchange="atualizarQuantidade(${item.productId}, this.value)">
+            </td>
+
+            <td>R$ ${item.price || "0.00"}</td>
+
+            <td>
+                <button class="btn btn-danger" onclick="removerDoCarrinho(${item.productId})">
+                    <i class="fas fa-trash"></i> Excluir
+                </button>
+            </td>
+        `;
+
+        corpo.appendChild(row);
+    });
+}
+

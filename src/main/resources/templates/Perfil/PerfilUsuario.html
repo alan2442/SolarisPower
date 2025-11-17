@@ -2,20 +2,29 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+  <!-- Definição do charset para UTF-8 -->
   <meta charset="UTF-8" />
+  <!-- Configuração para responsividade em dispositivos móveis -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Perfil Usuário</title>
 
+  <!-- Inclusão dos arquivos CSS personalizados -->
   <link rel="stylesheet" href="/Style/style3.css" />
   <link rel="stylesheet" href="Style/global.css">
   <link rel="stylesheet" href="Style/header.css">
   <link rel="stylesheet" href="Style/buscarCEP.css">
   <link rel="stylesheet" href="Style/footer.css">
+
+  <!-- Biblioteca de ícones FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+  <!-- Bootstrap CSS para estilização e responsividade -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+
+  <!-- Fonte Inter do Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet" />
 
+  <!-- Estilo customizado inline para bordas -->
   <style>
     .borda-grossa {
       border: 5px solid rgb(0, 132, 197);
@@ -23,10 +32,10 @@
     }
   </style>
 
-  <script src="/js/verificarLogin.js"></script>
-  <script src="/js/buscarCEP.js"></script>
-  <script src="/js/script.js"></script>
-
+  <!-- Inclusão de scripts JS personalizados -->
+  <script src="/js/verificarLogin.js"></script> <!-- Verifica se o usuário está logado -->
+  <script src="/js/buscarCEP.js"></script>       <!-- Função de busca de CEP -->
+  <script src="/js/script.js"></script>          <!-- Scripts gerais da aplicação -->
 
 </head>
 
@@ -35,17 +44,16 @@
   <!-- Começo Cabeçalho ____________________ -->
   <header class="header">
 
-
     <div class="container">
 
-      <!-- Logo-->
+      <!-- Logo do site com link para a página inicial -->
       <div class="logo">
         <a href="/index2">
           <img src="Images/logo2.jpeg" alt="SolarisPower Logo">
         </a>
       </div>
 
-      <!-- Links NavBar-->
+      <!-- Barra de navegação principal -->
       <nav class="main-nav">
         <ul>
           <li><a href="/produtos">Produtos</a></li>
@@ -55,29 +63,27 @@
         </ul>
       </nav>
 
-
+      <!-- Barra de busca -->
       <div class="search-bar">
         <input type="text" class="search-input" placeholder="O que procura hoje?">
         <button class="search-button">
-          <i class="fas fa-search"></i>
+          <i class="fas fa-search"></i> <!-- Ícone de lupa da busca -->
         </button>
       </div>
 
-
-      <!-- Botão para Perfil e Carrinho-->
+      <!-- Ações do usuário: Perfil e Carrinho -->
       <div class="user-actions">
         <div class="user-login">
           <span class="user-login-greeting">Olá, Seja Bem-Vindo!</span>
           <button onclick="verificarLogin()" class="user-login-action">Visualizar meu Perfil</button>
-
         </div>
 
+        <!-- Botão do carrinho de compras -->
         <a href="/carrinho" class="cart-button">
           <i class="fas fa-shopping-cart cart-icon"></i>
-          <span class="cart-count">0</span>
+          <span class="cart-count">0</span> <!-- Quantidade de itens no carrinho -->
         </a>
       </div>
-
 
     </div>
   </header>
@@ -87,17 +93,16 @@
 
     <section>
 
-
-      <!--Mensagem de Usuario cadastrado-->
+      <!-- Mensagem de sucesso para atualização do usuário (Thymeleaf) -->
       <div th:if="${mensagemAtualizacaoU}" class="alert alert-success" role="alert">
         <span th:text="${mensagemAtualizacaoU}"></span>
       </div>
 
-
+      <!-- Formulário para atualização dos dados do usuário -->
       <form th:action="@{/atualizarUsuario}" method="post" th:object="${pessoa}"
         class="row g-3 bg-dark p-4 mr-5 ml-5 mt-5 borda-grossa">
 
-
+        <!-- Título da seção Usuário -->
         <div class="col-lg-12 mx-auto">
           <h1 id="nomeLogo" class="text-center m-3">
             <img src="/Images/5907.jpg" style="width: 50px; height: 50px; border-radius: 40px" />
@@ -105,9 +110,10 @@
           </h1>
         </div>
 
+        <!-- Campo oculto para enviar o ID do usuário -->
         <input type="hidden" th:field="*{cdPessoa}" />
 
-
+        <!-- Campos de informações pessoais -->
         <div class="col-md-6">
           <label class="form-label text-white">Nome</label>
           <input type="text" class="form-control" th:field="*{nmPessoa}" />
@@ -133,6 +139,7 @@
           <input type="email" class="form-control" th:field="*{emailPessoa}" />
         </div>
 
+        <!-- Título da seção Endereço -->
         <div class="col-lg-12 mx-auto mt-5 mb-2">
           <h1 class="text-center" id="nomeLogo">
             <img src="/Images/simboloEndereco.jpg" style="width: 50px; height: 50px; border-radius: 40px" />
@@ -140,8 +147,7 @@
           </h1>
         </div>
 
-
-
+        <!-- Campo CEP com botão de busca -->
         <div class="col-md-6">
           <label class="form-label text-white">CEP</label>
           <div class="input-group">
@@ -155,9 +161,7 @@
           </div>
         </div>
 
-
-
-
+        <!-- Campos de endereço: Rua, Número e Complemento -->
         <div class="col-md-6">
           <label class="form-label text-white">Rua</label>
           <input type="text" class="form-control" th:field="*{ruaPessoa}" />
@@ -173,6 +177,7 @@
           <input type="text" class="form-control" th:field="*{complementoPessoa}" />
         </div>
 
+        <!-- Botões de ação: Atualizar e Logout -->
         <div class="col-12 text-center">
           <button type="submit" class="btn btn-primary m-4 btn-lg">Alterar Dados do Usuário</button>
           <a href="/logout" class="btn btn-secondary m-4 btn-lg">Sair da Conta</a>
@@ -185,6 +190,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
+        <!-- Seção de categorias -->
         <div class="footer-section">
           <h4>Categorias</h4>
           <ul>
@@ -194,6 +200,7 @@
             <li><a href="/produtos">Kits Completos</a></li>
           </ul>
         </div>
+        <!-- Seção institucional -->
         <div class="footer-section">
           <h4>Institucional</h4>
           <ul>
@@ -202,6 +209,7 @@
             <li><a href="/duvidas">Dúvidas Frequentes</a></li>
           </ul>
         </div>
+        <!-- Seção de atendimento -->
         <div class="footer-section">
           <h4>Atendimento</h4>
           <ul>
@@ -212,12 +220,12 @@
         </div>
 
       </div>
+      <!-- Direitos autorais -->
       <div class="copyright">
         <p>&copy; <span id="current-year">2025</span> SolarisPower. Todos os direitos reservados.</p>
       </div>
     </div>
   </footer>
-
   <!-- Fim Rodapé  ------------------ -->
 
 </body>
