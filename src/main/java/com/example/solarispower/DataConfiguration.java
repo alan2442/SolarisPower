@@ -31,7 +31,7 @@ public class DataConfiguration {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver"); // Driver JDBC do MySQL
         dataSource.setUrl("jdbc:mysql://localhost:3306/solarispower"); // URL de conexão
         dataSource.setUsername("root"); // Usuário do banco
-        dataSource.setPassword("root"); // Senha do banco
+        dataSource.setPassword("fatec217"); // Senha do banco
         return dataSource;
     }
     
